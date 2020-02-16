@@ -1,0 +1,11 @@
+<div
+  align="center"
+  class="{{ (_isShowing ? 'draw-out ' : 'draw-in ') + 'toast-wrapper' }}"
+>
+  <div class="toast">
+    <div class="toast-text">
+      <span>{{ text }}</span>
+    </div>
+    <div (click)="cancel()"><span>X</span></div>
+  </div>
+</div>

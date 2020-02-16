@@ -1,0 +1,95 @@
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  OnDestroy,
+  EventEmitter,
+  OnChanges,
+  DoCheck,
+  SimpleChanges,
+  AfterContentChecked,
+  AfterViewInit,
+  ViewChild,
+  ContentChild,
+  AfterViewChecked,
+  AfterContentInit
+} from "@angular/core";
+import { TestServiceService } from "../test-service.service";
+
+import { interval, Subscription } from "rxjs";
+import { take, map } from "rxjs/operators";
+
+enum BtnTypes {
+  "flat",
+  "fab",
+  "disabled"
+}
+
+@Component({
+  selector: "app-button",
+  templateUrl: "./button.component.html",
+  styleUrls: ["./button.component.scss"]
+})
+export class ButtonComponent
+  implements OnInit, DoCheck, OnDestroy, AfterViewChecked, AfterContentInit {
+  @Input()
+  public text: String;
+  @Input()
+  public type: String;
+  @Input("bgcolor")
+  public bgColor: String;
+  @Input("color")
+  public color: String;
+
+  @Output()
+  public clicked = new EventEmitter<any>();
+
+  public shouldShow = true;
+  public btnText = "";
+  public data = "";
+  public btnClass = {
+    flat: false,
+    round: false,
+    fab: false,
+    rounded: false,
+    btn: true,
+    fill: false
+  };
+  public customStyle = {};
+
+  constructor(public globals: TestServiceService) {}
+
+  ngOnInit() {
+    this.btnClass.flat = this.type === "flat";
+    this.btnClass.fab = this.type === "fab";
+    this.btnClass.round = this.type === "round";
+    this.btnClass.rounded = this.type === "rounded";
+    this.btnClass.fill = this.type === "fill";
+
+    this.customStyle = {
+      ...this.customStyle,
+      ...{ "background-color": this.bgColor, color: this.color }
+    };
+  }
+  ngAfterViewInit(): void {
+    // console.log("button has finished mounting");
+  }
+  ngAfterViewChecked(): void {
+    // console.log("finised checking for update on button: ");
+  }
+
+  ngOnDestroy() {
+    // console.log("button destroyed");
+  }
+
+  ngDoCheck() {
+    // console.log("do performing check: ");
+  }
+
+  ngAfterContentInit() {}
+
+  onClick = args => {
+    this.clicked.emit(args);
+  };
+}

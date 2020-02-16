@@ -1,0 +1,11 @@
+<div class="button">
+  <button
+    [ngStyle]="customStyle"
+    [ngClass]="btnClass"
+    *ngIf="shouldShow"
+    (click)="onClick()"
+  >
+    {{ text }}
+    <ng-content></ng-content>
+  </button>
+</div>

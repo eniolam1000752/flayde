@@ -1,0 +1,18 @@
+<div class="layout-wrapper">
+  <div class="layout-left">
+    <div class="right-wrapper">
+      <ng-content select="div[class='left']"></ng-content>
+    </div>
+  </div>
+  <div class=" layout-center">
+    <div class="header"><span class="dot"></span> Active Project</div>
+    <div class="body">
+      <ng-content select="div[class='center']"></ng-content>
+    </div>
+  </div>
+  <div [ngClass]="layoutRightClass">
+    <div class="right-wrapper">
+      <ng-content select="div[class='right']"></ng-content>
+    </div>
+  </div>
+</div>

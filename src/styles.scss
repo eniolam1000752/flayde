@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+// color definations
+$white: #fff;
+$primary-color: #a80044;
+$primary-color-2: #da1966;
+$secondary-color1: #f1f1f1;
+$secondary-color-2: #828282;
+
+// z-indexss
+$modal-zindex: 100000000;
+
+html,
+body {
+  font-family: "Calibri Light";
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba($color: $secondary-color-2, $alpha: 0.8);
+  border-radius: 20px;
+}
+::-webkit-scrollbar-button {
+}
+body {
+  margin: 0px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 10px;
+  background-color: $white;
+  margin: 10px;
+}
+.v-space {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  height: 2px;
+}
+.v-space {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.badge-3 {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #dedede;
+  font-size: 13px;
+  font-weight: bold;
+  position: relative;
+  top: -5px;
+}
+.badge-2 {
+  border-radius: 20px;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  font-size: 14px;
+}

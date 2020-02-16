@@ -1,0 +1,14 @@
+<ng-container>
+  <div>
+    <span class="label">{{ placeholder }}</span>
+    <div class="input-field">
+      <input
+        (keyup)="onTextChanged($event)"
+        [type]="type"
+        [placeholder]="placeholder"
+        [(ngModel)]="value"
+      />
+    </div>
+    <span>{{ message }}</span>
+  </div>
+</ng-container>

@@ -1,0 +1,14 @@
+<div class="modal">
+  <div [ngClass]="modalClass" (click)="onclicked($event)">
+    <div class="modal-content" (click)="contentClick($event)">
+      <div class="modal-header">
+        <span>{{ headerText }}</span
+        ><ng-content select='div[class="close-btn"]'></ng-content>
+      </div>
+      <ng-content select='div[class="content"]'></ng-content>
+      <div class="modal-footer">
+        <ng-content select='div[class="footer"]'></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

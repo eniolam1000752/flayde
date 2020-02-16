@@ -1,0 +1,39 @@
+@import "../../styles.scss";
+
+.input-field {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  input {
+    background-color: transparent;
+    border: 0px solid transparent;
+    width: 100%;
+    height: 30px;
+    outline: none;
+    font-size: 21px;
+  }
+  input:focus {
+    outline: none;
+  }
+  input:active {
+    outline: none;
+  }
+}
+.input-field:focus-within {
+  border: 1px solid $primary-color;
+}
+.input-field ~ span {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  font-weight: bold;
+  color: $primary-color;
+}
+.label {
+  position: relative;
+  bottom: 7px;
+  left: 2px;
+}

@@ -1,0 +1,13 @@
+.list {
+  .header {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .item-container {
+    display: block;
+    flex-direction: column;
+  }
+  .item {
+    width: 100%;
+  }
+}
