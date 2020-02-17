@@ -15,7 +15,7 @@ import { TestServiceService } from "../test-service.service";
 })
 export class ToastComponent implements OnInit, OnChanges {
   @Input("showing")
-  private _isShowing: Boolean = true;
+  private _isShowing: Boolean = false;
 
   @Input("text")
   private text: String = "no text provied ???";
@@ -31,12 +31,26 @@ export class ToastComponent implements OnInit, OnChanges {
   ngOnInit() {
     console.log("toast component inited");
   }
-  ngOnChanges(changes: SimpleChanges) {
-    console.log("toast did change: ", changes);
-  }
+  ngOnChanges(changes: SimpleChanges) {}
 
   public toggle = () => {
     this._isShowing = !this._isShowing;
+    if (this._isShowing) {
+      setTimeout(() => {
+        this.hideToast();
+      }, 3000);
+    }
+  };
+
+  public showToast = () => {
+    this._isShowing = true;
+    setTimeout(() => {
+      this.hideToast();
+    }, 3000);
+  };
+
+  public hideToast = () => {
+    this._isShowing = false;
   };
 
   private cancel = () => {

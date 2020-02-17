@@ -1,5 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
-
+# "build": "ng build  && serve -s dist/TestAngular",
 # compiled output
 /dist
 /tmp

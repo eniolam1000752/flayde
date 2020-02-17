@@ -17,6 +17,7 @@ import { ModalComponent } from "./modal/modal.component";
 import { ButtonComponent } from "./button/button.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { Project, InputConfig, Department, MatrixData } from "./Interfaces";
+import { ToastComponent } from "./toast/toast.component";
 
 interface ColorObj {
   color: string;
@@ -40,7 +41,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild("modal", { static: false })
   public modalRef: ModalComponent;
 
-  public toastText = "";
+  @ViewChild("toast", { static: false })
+  public toastRef: ToastComponent;
+
   public collapsableClass = { collapsable: true, "no-collapse": true };
   public modalContent = "inputConfig";
   public modalHeaderTitle = "Add Departmental Relationships";
@@ -79,6 +82,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public activeProject: Project = { name: "eni" } as Project;
 
   public deptAlias: string = "";
+  public toastMessage: string = "";
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
@@ -125,14 +129,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.toggleModal();
   }
   showAddLayoutDepartment() {
-    this.modalContent = "department";
-    this.modalHeaderTitle = "Add Department";
-    this.toggleModal();
+    if (this.activeProject.id) {
+      this.modalContent = "department";
+      this.modalHeaderTitle = "Add Department";
+      this.toggleModal();
+    } else {
+      this.toastMessage = "😠 Create a project before you add a Department";
+      this.toastRef.showToast();
+    }
   }
   showAddInputConfig() {
-    this.modalContent = "inputConfig";
-    this.modalHeaderTitle = "Add Departmental Relationships";
-    this.toggleModal();
+    if (this.activeProject.id) {
+      this.modalContent = "inputConfig";
+      this.modalHeaderTitle = "Add Departmental Relationships";
+      this.toggleModal();
+    } else {
+      this.toastMessage = "😠 Create a project before you add a relationship";
+      this.toastRef.showToast();
+    }
   }
   onSelectColor(colorObj) {
     this.selectedColor = colorObj;
@@ -267,6 +281,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     } catch (exp) {
       console.log(exp.message);
       this.newDeptInputFieldMsg = exp.message;
+      this.toastMessage = exp.message;
+      this.toastRef.toggle();
     }
   }
 
