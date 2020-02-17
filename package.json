@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "(ng build && npx lite-server)",
-    "build": "ng build  && npx lite-server",
+    "start": "ng serve",
+    "build": "ng build  && npx serve -s dist/TestAngular",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
