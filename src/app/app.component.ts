@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public selectedColor: ColorObj = this.colorList[0];
   public modelDim: DimObj = { width: 0, height: 0, area: 0 };
-  public weightMatrix: InputConfig;
+  public weightMatrix: MatrixData;
   public selectedInputWeightObj = {};
 
   public newProject: Project = {
@@ -209,7 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   loadSelectedProject(selectedProject: Project) {
     // console.log(selectedProject);
-    this.selectProject(selectedProject);
+    this.selectProject(selectedProject, selectedProject.id);
     for (let project of this.opendProjects) {
       if (project.id === selectedProject.id) {
         return 0;
