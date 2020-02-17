@@ -26,6 +26,8 @@ export class InputFieldComponent implements OnInit, OnChanges {
 
   @Output("changeText")
   public changeText = new EventEmitter<any>();
+  @Output("enterPressed")
+  public enterPressed = new EventEmitter<any>();
 
   public value = "";
 
@@ -34,9 +36,12 @@ export class InputFieldComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   onTextChanged(event) {
-    console.log("event");
+    // console.log(event);
     this.changeText.emit(this.value);
     this.value = this.text;
+    if (event.key === "Enter") {
+      this.enterPressed.emit(event);
+    }
   }
   ngOnChanges() {
     this.value = this.text;

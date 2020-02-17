@@ -1,15 +1,44 @@
-export interface Pos {
+interface Pos {
   x: number;
   y: number;
 }
-export interface Dimension {
+interface IJPos {
+  i: number;
+  j: number;
+}
+interface Dimension {
   width: number;
   height: number;
   area: number;
 }
+interface Result {
+  execTime: number;
+  startTime: number;
+  result: string; // to be looked into
+}
+interface colInputData {
+  id: string;
+  value: number;
+  pos: IJPos;
+  departmentId: string;
+}
+
+interface rowInputData {
+  rowData: Array<colInputData>;
+  departmentId: string;
+}
+
+export interface MatrixData extends Array<rowInputData> {}
+
+export interface InputConfig {
+  id: string;
+  name: string;
+  matrix: MatrixData;
+}
 
 export interface Department {
   id: string;
+  index: number;
   name: string;
   color: string;
   created: Date;
@@ -37,4 +66,7 @@ export interface Project {
   sharedTo: User;
   isDeleted: boolean;
   deleteDate: Date;
+  result: Result;
+  activeInputConfig: InputConfig;
+  inputConfigs: InputConfig[];
 }

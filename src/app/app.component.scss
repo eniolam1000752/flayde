@@ -59,6 +59,7 @@
 }
 .project-wrapper {
   padding: 15px;
+  width: 100%;
   span {
     font-size: 15px;
     font-weight: bold;
@@ -67,11 +68,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
     div.details {
       font-size: 13px;
       font-weight: 100;
-      width: 75%;
+      width: 85%;
       padding-top: 7px;
+    }
+    div.details ~ div {
+      width: 15%;
     }
   }
 }

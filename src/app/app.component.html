@@ -52,7 +52,13 @@
           <div class="header"></div>
           <ng-template let-item>
             <div>
-              <img src="../assets/icons/projectIcon.png" />
+              <img
+                [src]="
+                  item.id === activeProject.id
+                    ? '../assets/icons/projectIcon.png'
+                    : '../assets/icons/inactiveProjectIcon.png'
+                "
+              />
               <app-button
                 bgcolor="transparent"
                 type="flat"
@@ -71,13 +77,17 @@
       <span style="font-weight: bold; font-size: 14px;margin-bottom: 16px;"
         >Opened projects</span
       >
-      <app-card *ngFor="let x of [2, 3, 4, 5]" active="{{ x === 2 }}">
+      <app-card
+        *ngFor="let openedProject of opendProjects"
+        [active]="openedProject.id === activeProject.id"
+        (clicked)="selectProject(openedProject)"
+      >
         <div class="project-wrapper">
-          <span>The Active project 2</span><br />
+          <span>{{ openedProject.name }}</span
+          ><br />
           <div>
             <div class="details">
-              sfadfadfadadfadfa fa fa fdadfafd a fda fd afdas fa sf safdsafa df
-              a
+              {{ openedProject.description }}
             </div>
             <div>
               <img src="../assets/icons/play.svg" />
@@ -93,13 +103,13 @@
   <div class="v-space"></div>
   <div class="v-space"></div>
 
-  <app-list [renderData]="[1, 2, 3, 3, 4]">
+  <app-list [renderData]="activeProject.departments">
     <div class="header">
       <div class="list-header">
         <span style="display: flex; flex-direction: row"
           >Departments &nbsp;
           <div class="badge-2">
-            4
+            {{ activeProject.numberOfDept }}
           </div></span
         >
         <app-button
@@ -113,17 +123,17 @@
     </div>
     <ng-template let-item
       ><div class="list-item">
-        <app-button type="flat" bgcolor="transparent" color="black"
-          >kjklsdkjfkdjf</app-button
-        >
-        <div class="dot" style="background-color: black"></div>
+        <app-button type="flat" bgcolor="transparent" color="black">{{
+          item.name
+        }}</app-button>
+        <div class="dot" [ngStyle]="{ 'background-color': item.color }"></div>
       </div>
     </ng-template>
   </app-list>
 
   <div class="v-space"></div>
 
-  <app-list [renderData]="[1]">
+  <app-list [renderData]="activeProject.inputConfigs">
     <div class="header">
       <div class="list-header">
         <span>Input config</span>
@@ -192,7 +202,9 @@
     <app-input-field
       [text]="newProject.name"
       (changeText)="onTextChanged($event, 'project')"
-      message="provied valid input feild"
+      [message]="newProjectInputFieldMsg"
+      [placeholder]="'Project alias'"
+      (enterPressed)="createNewProject()"
     ></app-input-field>
   </div>
 </ng-template>
@@ -200,10 +212,11 @@
 <ng-template #addDepartment>
   <div style="width: 60%;">
     <app-input-field
-      text=""
+      [text]="deptAlias"
       placeholder="Department alias"
-      (changeText)="onTextChanged($event)"
-      message=""
+      (changeText)="onTextChanged($event, 'dept')"
+      [message]="newDeptInputFieldMsg"
+      (enterPressed)="addDeptToProject(activeProject, activeProject.id)"
     ></app-input-field>
   </div>
 
@@ -349,7 +362,13 @@
   <div class="footer">
     <app-button
       type="rounded"
-      (clicked)="modalContent === 'layout' ? createNewProject() : null"
+      (clicked)="
+        modalContent === 'layout'
+          ? createNewProject()
+          : modalContent === 'department'
+          ? addDeptToProject(activeProject, activeProject.id)
+          : null
+      "
       >Create</app-button
     >
   </div>

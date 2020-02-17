@@ -3,49 +3,6 @@ import { Observable, Subject, from } from "rxjs";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 
-interface Pos {
-  x: number;
-  y: number;
-}
-interface Dimension {
-  width: number;
-  height: number;
-  area: number;
-}
-interface ID {
-  id: string;
-}
-
-interface Department {
-  id: ID;
-  name: string;
-  color: string;
-  created: Date;
-  position: Pos;
-  dimension: Dimension;
-  left: ID;
-  right: ID;
-  top: ID;
-  bottom: ID;
-}
-
-interface User {}
-
-interface Project {
-  id: ID;
-  name: string;
-  description: string;
-  created: Date;
-  departments: Department[];
-  numberOfDept: number;
-  isRunning: boolean;
-  lastExec: Date;
-  firstExec : Date;
-  owner: User;
-  sharedTo: User;
-  isDeleted: boolean;
-  deleteDate: Date;
-}
 
 @Injectable({
   providedIn: "root"

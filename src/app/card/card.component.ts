@@ -14,7 +14,7 @@ import {
 })
 export class CardComponent implements OnInit, OnChanges {
   @Input("active")
-  public active = "false";
+  public active = false;
   @Output("clicked")
   public clicked = new EventEmitter();
 
@@ -24,13 +24,14 @@ export class CardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log("inited card", this.active);
-    this.cardClass.active = this.active === "true";
+    this.cardClass.active = this.active;
   }
 
   ngOnChanges() {
-    // this.cardClass.active = this.active;
+    this.cardClass.active = this.active;
   }
   onClicked(event) {
     this.clicked.emit(event);
   }
+
 }

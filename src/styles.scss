@@ -7,6 +7,7 @@ $secondary-color-2: #828282;
 
 // z-indexss
 $modal-zindex: 100000000;
+$toast-zindex: calc($modal-zindex + 1000);
 
 html,
 body {

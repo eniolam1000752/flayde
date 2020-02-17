@@ -16,7 +16,7 @@ import { TestServiceService } from "./test-service.service";
 import { ModalComponent } from "./modal/modal.component";
 import { ButtonComponent } from "./button/button.component";
 import { LayoutComponent } from "./layout/layout.component";
-import { Project } from "./Interfaces";
+import { Project, InputConfig, Department, MatrixData } from "./Interfaces";
 
 interface ColorObj {
   color: string;
@@ -64,32 +64,28 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public selectedColor: ColorObj = this.colorList[0];
   public modelDim: DimObj = { width: 0, height: 0, area: 0 };
-  public weightMatrix;
+  public weightMatrix: InputConfig;
   public selectedInputWeightObj = {};
 
-  public newProject: Project = { name: "" } as Project;
+  public newProject: Project = {
+    name: "",
+    description: "No description provided for this project."
+  } as Project;
   public projects: Project[] = [];
+  public indexedProjects: any = {};
   public opendProjects: Project[] = [];
+  public newProjectInputFieldMsg: string = "";
+  public newDeptInputFieldMsg: string = "";
+  public activeProject: Project = { name: "eni" } as Project;
+
+  public deptAlias: string = "";
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
   }
 
-  ngOnInit() {
-    // this.globals.addUser();
-    this.weightMatrix = new Array(6).fill(2).map((item, rowIndex) => ({
-      rowData: new Array(6).fill(2).map((item, colIndex) => ({
-        id: `${Math.random()}`,
-        value: 0,
-        pos: { i: rowIndex, j: colIndex },
-        departmentId: colIndex
-      })),
-      departmentId: rowIndex
-    }));
-  }
-  ngAfterViewInit() {
-    // this.showAddInputConfig();
-  }
+  ngOnInit() {}
+  ngAfterViewInit() {}
 
   toggleRightPane() {
     this.layoutRef.colapseRightPane();
@@ -114,6 +110,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     switch (inputCategory) {
       case "project":
         this.newProject.name = event;
+        break;
+      case "dept":
+        this.deptAlias = event;
         break;
       default:
         break;
@@ -177,24 +176,117 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   createNewProject() {
-    const projectClone: Project = { ...this.newProject } as Project;
-    projectClone.id = `project-${Math.random()}`;
-    projectClone.departments = [];
-    projectClone.numberOfDept = projectClone.departments.length;
-    projectClone.created = new Date();
-    projectClone.description = "";
-    projectClone.firstExec = null;
-    projectClone.deleteDate = null;
-    projectClone.isDeleted = false;
-    projectClone.isRunning = false;
-    projectClone.lastExec = null;
+    for (let item of this.projects) {
+      console.log(item);
+      if (item.name === this.newProject.name) {
+        console.log("project name has been use. Please chose another");
+        this.newProjectInputFieldMsg =
+          "project name had been used. Choose another";
+        return 0;
+      }
+    }
+
+    const projectClone: Project = {
+      ...this.newProject,
+      id: `project-${(Math.random() + "").slice(2, 15)}`,
+      departments: [],
+      created: new Date(),
+      numberOfDept: 0,
+      firstExec: null,
+      deleteDate: null,
+      isDeleted: false,
+      isRunning: false,
+      lastExec: null
+    } as Project;
 
     this.projects.push(projectClone);
+    this.indexedProjects[projectClone.id] = projectClone;
+    this.loadSelectedProject(projectClone);
     this.collapseProjects();
     this.toggleModal();
+    this.newProjectInputFieldMsg = "";
   }
 
-  loadSelectedProject(selectedProject) {
-    console.log(selectedProject);
+  loadSelectedProject(selectedProject: Project) {
+    // console.log(selectedProject);
+    this.selectProject(selectedProject);
+    for (let project of this.opendProjects) {
+      if (project.id === selectedProject.id) {
+        return 0;
+      }
+    }
+    this.opendProjects.push({ ...selectedProject });
+  }
+
+  loadInputConfig() {
+    this.weightMatrix = this.activeProject.departments.map(
+      (item, rowIndex) => ({
+        rowData: this.activeProject.departments.map((item, colIndex) => ({
+          id: `${Math.random()}`,
+          value: 0,
+          pos: { i: rowIndex, j: colIndex },
+          departmentId: colIndex.toString()
+        })),
+        departmentId: rowIndex.toString()
+      })
+    ) as MatrixData;
+  }
+
+  selectProject(project: Project, id) {
+    this.activeProject = project;
+    this.loadInputConfig();
+    console.log(this.projects);
+  }
+
+  addDeptToProject(project: Project, id) {
+    let deptTemp: Department = {
+      id: `dept-${(Math.random() + "").slice(2, 15)}`,
+      name: this.deptAlias,
+      color: { ...this.selectedColor }.color,
+      created: new Date(),
+      dimension: { ...this.modelDim } as DimObj,
+      left: "",
+      right: "",
+      top: "",
+      bottom: "",
+      position: { x: 0, y: 0 }
+    } as Department;
+
+    try {
+      this.departmentAddValidation(deptTemp, project);
+      this.activeProject.departments.push(deptTemp);
+      this.indexedProjects[id].numberOfDept = project.departments.length;
+
+      this.loadInputConfig();
+      this.toggleModal();
+
+      this.newDeptInputFieldMsg = "";
+      this.deptAlias = "";
+      this.selectedColor = this.colorList[0];
+      this.modelDim = { width: 0, height: 0, area: 0 };
+    } catch (exp) {
+      console.log(exp.message);
+      this.newDeptInputFieldMsg = exp.message;
+    }
+  }
+
+  private departmentAddValidation(deptInstance: Department, project: Project) {
+    if (!/\w+/.test(deptInstance.name)) {
+      throw new Error("provide a department alias");
+    }
+    if (deptInstance.dimension.width === 0) {
+      throw new Error("width of department can not be zero (0)");
+    }
+    if (deptInstance.dimension.height === 0) {
+      throw new Error("height of department can not be zero (0)");
+    }
+    for (let dept of project.departments) {
+      if (dept.color === deptInstance.color) {
+        throw new Error("color value has been used. choose another.");
+      }
+      if (dept.name === deptInstance.name) {
+        throw new Error("name has been used. choose another");
+      }
+    }
   }
 }
