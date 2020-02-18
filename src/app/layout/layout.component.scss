@@ -59,11 +59,14 @@ div.layout-wrapper {
       }
     }
     .body {
-      display: relative;
+      display: flex;
       width: calc(100% - 4px);
       margin-top: 4px;
       height: calc(100% - 0px);
       overflow-y: scroll;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
     }
   }
 }

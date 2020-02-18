@@ -16,6 +16,7 @@ import { CardComponent } from './card/card.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ListComponent } from './list/list.component';
 import { ModalComponent } from './modal/modal.component';
+import { RendrerComponent } from './rendrer/rendrer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ModalComponent } from './modal/modal.component';
     CardComponent,
     LoaderComponent,
     ListComponent,
-    ModalComponent
+    ModalComponent,
+    RendrerComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TestServiceService],
