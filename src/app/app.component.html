@@ -80,7 +80,7 @@
       <app-card
         *ngFor="let openedProject of opendProjects"
         [active]="openedProject.id === activeProject.id"
-        (clicked)="selectProject(openedProject)"
+        (clicked)="selectProject(openedProject, openedProject.id)"
       >
         <div class="project-wrapper">
           <span>{{ openedProject.name }}</span
@@ -108,10 +108,19 @@
       <div class="list-header">
         <span style="display: flex; flex-direction: row"
           >Departments &nbsp;
-          <div class="badge-2">
-            {{ activeProject.numberOfDept }}
-          </div></span
-        >
+          <div
+            [ngClass]="{
+              'badge-2':
+                activeProject.numberOfDept && activeProject.numberOfDept != 0
+            }"
+          >
+            {{
+              activeProject.numberOfDept && activeProject.numberOfDept != 0
+                ? activeProject.numberOfDept
+                : ""
+            }}
+          </div>
+        </span>
         <app-button
           type="flat round"
           bgcolor="transparent"
@@ -148,17 +157,28 @@
     </div>
     <ng-template let-item
       ><div class="list-item">
-        <app-button type="flat" bgcolor="transparent" color="black">
-          <i style="font-size: 10px; color: #a80044;" class="fas fa-check"></i>
-          &nbsp; kjklsdkjfkdjf</app-button
+        <app-button
+          (clicked)="selectRelationships(item)"
+          type="flat"
+          bgcolor="transparent"
+          color="black"
+        >
+          <i
+            *ngIf="activeProject.activeInputConfig.id === item.id"
+            style="font-size: 10px; color: #a80044;"
+            class="fas fa-check"
+          ></i>
+          &nbsp; {{ item.name }}</app-button
         >
         <div style="transform: scale(0.8)">
           <app-button
             type="round flat"
             bgcolor="transparent"
             color="rgba(0,0,0,0.54)"
-            ><i class="fas fa-pen"></i
-          ></app-button>
+            (clicked)="editRelationships(item)"
+          >
+            <i class="fas fa-pen"></i>
+          </app-button>
         </div>
       </div>
     </ng-template>
@@ -166,7 +186,7 @@
 
   <div class="v-space"></div>
 
-  <app-list [renderData]="[-1, 0, 1, 2, 3, 4]">
+  <app-list [renderData]="legend">
     <div class="header">
       <div class="list-header">
         <span>Weight Legend</span>
@@ -175,16 +195,21 @@
         </app-button> -->
       </div>
     </div>
-    <ng-template let-item
-      ><div class="list-item">
-        <app-button type="flat" bgcolor="transparent" color="black"
-          ><div style="display: flex; flex-direction: row;">
-            lkjkjaklksdfdsf &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="badge-3">
-              {{ item }}
-            </div>
-          </div></app-button
+    <ng-template let-item>
+      <div class="list-item">
+        <div
+          style="display: flex; flex-direction: row;justify-content: space-between;width: 100%; padding: 5px;"
         >
+          <span>
+            <b>
+              <small>{{ item.code }}</small>
+            </b>
+            &nbsp;&nbsp;{{ item.priority }}
+          </span>
+          <div class="badge-3">
+            {{ item.value }}
+          </div>
+        </div>
       </div>
     </ng-template>
   </app-list>
@@ -277,10 +302,11 @@
 <ng-template #addInputConfig>
   <div style="width: 60%;">
     <app-input-field
-      text=""
+      [text]="inputAlias"
       placeholder="Weight Input alias"
-      (changeText)="onTextChanged($event)"
-      message=""
+      (changeText)="onTextChanged($event, 'relationship')"
+      [message]="newRelationshipInputFieldMsg"
+      (enterPressed)="addRelationshipsToProject()"
     ></app-input-field>
   </div>
   <br />
@@ -328,6 +354,64 @@
   <br /><br />
 </ng-template>
 
+<ng-template #editInputConfig>
+  <div style="width: 60%;">
+    <app-input-field
+      [text]="editSelectedRelationship.name"
+      placeholder="Relationship alias/name"
+      (changeText)="onTextChanged($event, 'e-relationship')"
+      [message]=""
+      (enterPressed)="toggleModal()"
+    ></app-input-field>
+  </div>
+  <br />
+  <div
+    (click)="setSelectedInputWeight(null, { pos: { i: 1, j: 0 } })"
+    class="matrix-container"
+  >
+    <div class="header row">
+      <div class="col"><div class="chip header"></div></div>
+      <div
+        *ngFor="let headerCol of editSelectedRelationship.matrix"
+        class="col"
+      >
+        <div class="chip header">{{ headerCol.departmentId }}</div>
+      </div>
+    </div>
+
+    <div *ngFor="let rowValue of editSelectedRelationship.matrix" class="row">
+      <div class="col">
+        <div class="chip header">{{ rowValue.departmentId }}</div>
+      </div>
+      <div *ngFor="let colValue of rowValue.rowData" class="col">
+        <div
+          (click)="setSelectedInputWeight($event, colValue)"
+          [ngClass]="{
+            chip: true,
+            dark: colValue.pos.i === colValue.pos.j,
+            notting: colValue.pos.i > colValue.pos.j,
+            active: selectedInputWeightObj.id === colValue.id
+          }"
+        >
+          {{ colValue.value }}
+        </div>
+        <div *ngIf="selectedInputWeightObj.id === colValue.id">
+          <app-button
+            *ngFor="let select of [-1, 0, 1, 2, 3, 4]"
+            [bgcolor]="'transparent'"
+            [type]="'flat'"
+            (clicked)="selectWeightValue(select, colValue.id, true)"
+            color="black"
+          >
+            {{ select }}
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+</ng-template>
+
 <app-modal [headerText]="modalHeaderTitle" #modal [allowBackLayClick]="true">
   <div class="close-btn">
     <app-button
@@ -349,6 +433,9 @@
       <ng-container *ngSwitchCase="'inputConfig'">
         <ng-container *ngTemplateOutlet="addInputConfig"> </ng-container>
       </ng-container>
+      <ng-container *ngSwitchCase="'e-inputConfig'">
+        <ng-container *ngTemplateOutlet="editInputConfig"> </ng-container>
+      </ng-container>
       <ng-container *ngSwitchDefault>
         <div
           style="display:flex; justify-content:center; align-items:center; width: 100%; "
@@ -367,15 +454,19 @@
           ? createNewProject()
           : modalContent === 'department'
           ? addDeptToProject(activeProject, activeProject.id)
+          : modalContent === 'inputConfig'
+          ? addRelationshipsToProject(activeProject.id)
+          : modalContent === 'e-inputConfig'
+          ? toggleModal()
           : null
       "
-      >Create</app-button
+      >{{ modalContent === "e-inputConfig" ? "Edit" : "Create" }}</app-button
     >
   </div>
 </app-modal>
 <app-toast #toast [text]="toastMessage"></app-toast>
 
-<app-layout #layout>
+<app-layout #layout [activeProject]="activeProject">
   <div class="center">
     <ng-container *ngTemplateOutlet="centerContent"></ng-container>
   </div>

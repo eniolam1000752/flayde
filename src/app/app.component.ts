@@ -10,7 +10,8 @@ import {
   AfterContentInit,
   AfterContentChecked,
   OnChanges,
-  Predicate
+  Predicate,
+  Input
 } from "@angular/core";
 import { TestServiceService } from "./test-service.service";
 import { ModalComponent } from "./modal/modal.component";
@@ -45,8 +46,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   public toastRef: ToastComponent;
 
   public collapsableClass = { collapsable: true, "no-collapse": true };
-  public modalContent = "inputConfig";
-  public modalHeaderTitle = "Add Departmental Relationships";
+  public modalContent = "";
+  public modalHeaderTitle = "";
   public colorList: ColorObj[] = [
     { color: "#f90", id: 0 },
     { color: "#090", id: 1 },
@@ -64,6 +65,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     { color: "#e08", id: 13 },
     { color: "#092", id: 14 }
   ];
+  public legend = [
+    { code: "A", value: 4, priority: "Aboslutely Necessary" },
+    { code: "E", value: 3, priority: "Especially important" },
+    { code: "I", value: 2, priority: "Important" },
+    { code: "O", value: 1, priority: "Oridinary" },
+    { code: "U", value: 0, priority: "Unimportant" },
+    { code: "X", value: -1, priority: "Undesirable" }
+  ];
 
   public selectedColor: ColorObj = this.colorList[0];
   public modelDim: DimObj = { width: 0, height: 0, area: 0 };
@@ -79,10 +88,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   public opendProjects: Project[] = [];
   public newProjectInputFieldMsg: string = "";
   public newDeptInputFieldMsg: string = "";
-  public activeProject: Project = { name: "eni" } as Project;
+  public newRelationshipInputFieldMsg: string = "";
+  public activeProject: Project = { name: "" } as Project;
 
   public deptAlias: string = "";
+  public inputAlias: string = "";
   public toastMessage: string = "";
+
+  public editSelectedRelationship: InputConfig = {} as InputConfig;
+  public selectedProjectId = "";
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
@@ -106,7 +120,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.collapsableClass["no-collapse"] = true;
   }
 
-  private toggleModal() {
+  public toggleModal() {
     this.modalRef.toggleModal();
   }
 
@@ -117,6 +131,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         break;
       case "dept":
         this.deptAlias = event;
+        break;
+      case "relationship":
+        this.inputAlias = event;
+        break;
+      case "e-relationship":
+        this.editSelectedRelationship.name = event;
         break;
       default:
         break;
@@ -139,9 +159,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
   showAddInputConfig() {
+    if (!this.activeProject.departments) {
+      this.toastMessage =
+        "😠 Number of department should be greater than 2 to provide a relationship";
+      this.toastRef.showToast();
+      return 0;
+    }
+    if (this.activeProject.departments.length <= 2) {
+      this.toastMessage =
+        "😠 Number of department should be greater than to provide a relationship";
+      this.toastRef.showToast();
+      return 0;
+    }
     if (this.activeProject.id) {
       this.modalContent = "inputConfig";
       this.modalHeaderTitle = "Add Departmental Relationships";
+      this.loadInputConfig();
       this.toggleModal();
     } else {
       this.toastMessage = "😠 Create a project before you add a relationship";
@@ -181,48 +214,55 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.selectedInputWeightObj = {};
     }
   }
-  selectWeightValue(value, id) {
-    this.weightMatrix.forEach(item => {
-      item.rowData.forEach(colItem => {
-        if (colItem.id === id) colItem.value = value;
+  selectWeightValue(value, id, isEdit?) {
+    if (!isEdit) {
+      this.weightMatrix.forEach(item => {
+        item.rowData.forEach(colItem => {
+          if (colItem.id === id) colItem.value = value;
+        });
       });
-    });
+    } else {
+      this.editSelectedRelationship.matrix.forEach(item => {
+        item.rowData.forEach(colItem => {
+          if (colItem.id === id) colItem.value = value;
+        });
+      });
+    }
   }
 
   createNewProject() {
-    for (let item of this.projects) {
-      console.log(item);
-      if (item.name === this.newProject.name) {
-        console.log("project name has been use. Please chose another");
-        this.newProjectInputFieldMsg =
-          "project name had been used. Choose another";
-        return 0;
-      }
+    try {
+      this.projectAddValidation();
+      const projectClone: Project = {
+        ...this.newProject,
+        id: `project-${(Math.random() + "").slice(2, 15)}`,
+        departments: [],
+        created: new Date(),
+        numberOfDept: 0,
+        firstExec: null,
+        deleteDate: null,
+        isDeleted: false,
+        isRunning: false,
+        lastExec: null,
+        inputConfigs: [],
+        activeInputConfig: {}
+      } as Project;
+
+      this.projects.push(projectClone);
+      this.indexedProjects[projectClone.id] = projectClone;
+      this.loadSelectedProject(projectClone);
+      this.collapseProjects();
+      this.toggleModal();
+      this.newProjectInputFieldMsg = "";
+    } catch (exp) {
+      this.newProjectInputFieldMsg = exp.message;
+      this.toastMessage = exp.message;
+      this.toastRef.showToast();
     }
-
-    const projectClone: Project = {
-      ...this.newProject,
-      id: `project-${(Math.random() + "").slice(2, 15)}`,
-      departments: [],
-      created: new Date(),
-      numberOfDept: 0,
-      firstExec: null,
-      deleteDate: null,
-      isDeleted: false,
-      isRunning: false,
-      lastExec: null
-    } as Project;
-
-    this.projects.push(projectClone);
-    this.indexedProjects[projectClone.id] = projectClone;
-    this.loadSelectedProject(projectClone);
-    this.collapseProjects();
-    this.toggleModal();
-    this.newProjectInputFieldMsg = "";
   }
 
   loadSelectedProject(selectedProject: Project) {
-    // console.log(selectedProject);
+    console.log(selectedProject);
     this.selectProject(selectedProject, selectedProject.id);
     for (let project of this.opendProjects) {
       if (project.id === selectedProject.id) {
@@ -236,7 +276,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.weightMatrix = this.activeProject.departments.map(
       (item, rowIndex) => ({
         rowData: this.activeProject.departments.map((item, colIndex) => ({
-          id: `${Math.random()}`,
+          id: `value-${(Math.random() + "").slice(2, 15)}`,
           value: 0,
           pos: { i: rowIndex, j: colIndex },
           departmentId: colIndex.toString()
@@ -247,9 +287,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   selectProject(project: Project, id) {
-    this.activeProject = project;
-    this.loadInputConfig();
-    console.log(this.projects);
+    this.activeProject = this.indexedProjects[id];
+    // this.loadInputConfig();
   }
 
   addDeptToProject(project: Project, id) {
@@ -269,9 +308,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     try {
       this.departmentAddValidation(deptTemp, project);
       this.activeProject.departments.push(deptTemp);
-      this.indexedProjects[id].numberOfDept = project.departments.length;
+      this.indexedProjects[
+        id
+      ].numberOfDept = this.activeProject.departments.length;
+      this.activeProject.numberOfDept = this.activeProject.departments.length;
 
-      this.loadInputConfig();
+      // this.loadInputConfig();
       this.toggleModal();
 
       this.newDeptInputFieldMsg = "";
@@ -282,8 +324,43 @@ export class AppComponent implements OnInit, AfterViewInit {
       console.log(exp.message);
       this.newDeptInputFieldMsg = exp.message;
       this.toastMessage = exp.message;
-      this.toastRef.toggle();
+      this.toastRef.showToast();
     }
+  }
+
+  addRelationshipsToProject() {
+    try {
+      this.relationshipValidation();
+      const projectId = this.activeProject.id;
+      const relationship: InputConfig = {
+        id: `relationship-${(Math.random() + "").slice(2, 15)}`,
+        name: this.inputAlias,
+        matrix: [...this.weightMatrix]
+      } as InputConfig;
+
+      this.indexedProjects[projectId].inputConfigs.push(relationship);
+      this.indexedProjects[projectId].activeInputConfig = relationship;
+      this.inputAlias = "";
+      this.toggleModal();
+    } catch (exp) {
+      this.newRelationshipInputFieldMsg = exp.message;
+      this.toastMessage = exp.message;
+      this.toastRef.showToast();
+    }
+  }
+
+  selectRelationships(relationShip: InputConfig) {
+    this.indexedProjects[
+      this.activeProject.id
+    ].activeInputConfig = relationShip;
+  }
+
+  editRelationships(relationShip: InputConfig) {
+    this.editSelectedRelationship = relationShip;
+    this.modalHeaderTitle = "Edit Relation ship for :";
+    this.modalContent = "e-inputConfig";
+    this.toggleModal();
+    console.log(this.editSelectedRelationship);
   }
 
   private departmentAddValidation(deptInstance: Department, project: Project) {
@@ -302,6 +379,32 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
       if (dept.name === deptInstance.name) {
         throw new Error("name has been used. choose another");
+      }
+    }
+  }
+
+  private projectAddValidation() {
+    if (!/\w+/.test(this.newProject.name)) {
+      throw new Error("provide a project alias/name");
+    }
+    for (let item of this.projects) {
+      if (item.name === this.newProject.name) {
+        throw new Error(
+          "Project alias/name has been used please choose another"
+        );
+      }
+    }
+  }
+
+  private relationshipValidation() {
+    if (!/\w+/.test(this.inputAlias)) {
+      throw new Error("provide a Relationship alias/name");
+    }
+    for (let item of this.indexedProjects[this.activeProject.id].inputConfigs) {
+      if (item.name === this.inputAlias) {
+        throw new Error(
+          "Relationship alias/name has been used please choose another"
+        );
       }
     }
   }

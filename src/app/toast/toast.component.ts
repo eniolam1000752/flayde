@@ -28,6 +28,8 @@ export class ToastComponent implements OnInit, OnChanges {
 
   constructor(globals: TestServiceService) {}
 
+  private timeoutHandler: any;
+
   ngOnInit() {
     console.log("toast component inited");
   }
@@ -36,7 +38,8 @@ export class ToastComponent implements OnInit, OnChanges {
   public toggle = () => {
     this._isShowing = !this._isShowing;
     if (this._isShowing) {
-      setTimeout(() => {
+      clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = setTimeout(() => {
         this.hideToast();
       }, 3000);
     }
@@ -44,7 +47,8 @@ export class ToastComponent implements OnInit, OnChanges {
 
   public showToast = () => {
     this._isShowing = true;
-    setTimeout(() => {
+    clearTimeout(this.timeoutHandler);
+    this.timeoutHandler = setTimeout(() => {
       this.hideToast();
     }, 3000);
   };

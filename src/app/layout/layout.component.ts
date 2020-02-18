@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Project } from "../Interfaces";
 
 @Component({
   selector: "app-layout",
@@ -7,6 +8,9 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
   exportAs: "layout"
 })
 export class LayoutComponent implements OnInit {
+  @Input("activeProject")
+  public activeProject: Project = {} as Project;
+
   public layoutRightClass = {};
 
   constructor() {}
