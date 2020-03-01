@@ -15,8 +15,10 @@ import {
 export class ListComponent implements OnInit {
   @Input("renderItem")
   public renderItemFunc: Function;
-  @Input("renderData")
+  @Input()
   public renderData;
+  @Input()
+  public isCollapsed = false;
 
   @Input("renderItem")
   public renderItem: TemplateRef<ElementRef>;

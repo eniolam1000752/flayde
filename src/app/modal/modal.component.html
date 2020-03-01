@@ -1,6 +1,10 @@
 <div class="modal">
   <div [ngClass]="modalClass" (click)="onclicked($event)">
     <div class="modal-content" (click)="contentClick($event)">
+      <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
+      <div class="loader-bar" *ngIf="isLoading">
+        <div class="loader"></div>
+      </div>
       <div class="modal-header">
         <span>{{ headerText }}</span
         ><ng-content select='div[class="close-btn"]'></ng-content>
@@ -9,6 +13,7 @@
       <div class="modal-footer">
         <ng-content select='div[class="footer"]'></ng-content>
       </div>
+      <!-- </form> -->
     </div>
   </div>
 </div>

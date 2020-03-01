@@ -1,0 +1,71 @@
+div.renderer {
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .view-port {
+    position: relative;
+    width: calc(100% - 6px);
+    left: 6px;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // transform: scale(1.7);
+    img {
+      opacity: 0.17;
+    }
+  }
+}
+.btn-suite {
+  position: absolute;
+  transform: translate(6px, 20px);
+  z-index: 10;
+  width: calc(100% - 10px);
+}
+.H-view {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  // background-color: yellow;
+  margin: 1px;
+  justify-content: center;
+  .block {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1px;
+    margin-right: 1px;
+    // background-color: red;
+  }
+  .block.clear {
+    background-color: transparent;
+  }
+}
+.render-label {
+  font-size: 16px;
+  margin-top: 30px;
+}
+.block.green-1 {
+  background-color: green;
+}
+.block.green-2 {
+  background-color: greenyellow;
+}
+.block.green-3 {
+  background-color: #49c665;
+}
+.block.green-4 {
+  background-color: rgb(11, 107, 32);
+}
+.block.green-5 {
+  background-color: rgb(119, 185, 119);
+}
+.block.green-6 {
+  background-color: rgb(119, 161, 185);
+}

@@ -243,3 +243,19 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+.suit-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  app-button {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+}
+.radio-item {
+  margin: 11px;
+  cursor: pointer;
+  i.fa-dot-circle {
+    color: $primary-color;
+  }
+}

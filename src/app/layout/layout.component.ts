@@ -10,6 +10,10 @@ import { Project } from "../Interfaces";
 export class LayoutComponent implements OnInit {
   @Input("activeProject")
   public activeProject: Project = {} as Project;
+  @Input("user")
+  public annotation: string = null;
+  @Output("statusClicked")
+  public statusClicked = new EventEmitter();
 
   public layoutRightClass = {};
 
@@ -27,4 +31,8 @@ export class LayoutComponent implements OnInit {
     this.layoutRightClass["right-hide"] = !this.layoutRightClass["right-hide"];
     this.layoutRightClass["right-show"] = !this.layoutRightClass["right-show"];
   };
+
+  public clickStatus(event) {
+    this.statusClicked.emit(event);
+  }
 }

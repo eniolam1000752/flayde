@@ -12,11 +12,31 @@
     align-items: center;
 
     .modal-content {
+      position: relative;
       width: 563px;
       padding: 20px;
       background-color: $white;
       box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.3);
       border-radius: 10px;
+      overflow-x: hidden;
+      .loader-bar {
+        height: 5px;
+        width: 100%;
+        background-color: #ddd;
+        position: absolute;
+        top: 0px;
+        overflow-x: hidden;
+        left: 0px;
+        .loader {
+          width: 20%;
+          height: 100%;
+          background-color: $primary-color;
+          animation-name: loader-anime;
+          animation-timing-function: linear;
+          animation-duration: 1s;
+          animation-iteration-count: infinite;
+        }
+      }
     }
   }
 
@@ -46,5 +66,14 @@
     justify-self: flex-end;
     width: 100%;
     justify-content: flex-end;
+  }
+}
+
+@keyframes loader-anime {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(550px);
   }
 }

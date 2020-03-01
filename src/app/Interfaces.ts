@@ -11,11 +11,6 @@ interface Dimension {
   height: number;
   area: number;
 }
-interface Result {
-  execTime: number;
-  startTime: number;
-  result: string; // to be looked into
-}
 interface colInputData {
   id: string;
   value: number;
@@ -28,6 +23,11 @@ interface rowInputData {
   departmentId: string;
 }
 
+export interface Result {
+  execTime: Date;
+  startTime: Date;
+  result: LayoutMatrix;
+}
 export interface MatrixData extends Array<rowInputData> {}
 
 export interface InputConfig {
@@ -54,6 +54,7 @@ export interface User {}
 
 export interface Project {
   id: string;
+  userId: string;
   name: string;
   description: string;
   created: Date;
@@ -69,4 +70,16 @@ export interface Project {
   result: Result;
   activeInputConfig: InputConfig;
   inputConfigs: InputConfig[];
+  layoutType: string;
 }
+
+interface layoutDept {
+  color: string;
+  id: string;
+  area: number;
+  width: number;
+  height: number;
+  breath: number;
+}
+
+export interface LayoutMatrix extends Array<Array<layoutDept>> {}

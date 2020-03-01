@@ -1,4 +1,11 @@
-import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  Input,
+  EventEmitter,
+  OnChanges
+} from "@angular/core";
 
 interface ModalEvent {
   event: String;
@@ -10,7 +17,7 @@ interface ModalEvent {
   templateUrl: "./modal.component.html",
   styleUrls: ["./modal.component.scss"]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnChanges {
   @Output()
   public toggled = new EventEmitter<Boolean>();
   @Output()
@@ -20,6 +27,8 @@ export class ModalComponent implements OnInit {
   public allowBackLayClick = true;
   @Input("headerText")
   public headerText = "-- empty --";
+  @Input("isLoading")
+  public isLoading = false;
 
   public modalClass = { "modal-back-lay": true, hide: true };
 
@@ -39,4 +48,7 @@ export class ModalComponent implements OnInit {
   contentClick(event) {
     event.stopPropagation();
   }
+
+  ngOnChanges() {}
+  onSubmit() {}
 }

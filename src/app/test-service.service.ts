@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject, from } from "rxjs";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
-
+import "firebase/auth";
+import { Project } from "./Interfaces";
 
 @Injectable({
   providedIn: "root"
@@ -26,6 +27,7 @@ export class TestServiceService {
   };
   public db: firebase.firestore.Firestore = null;
   public userCollection: firebase.firestore.CollectionReference = null;
+  public projectCollection: firebase.firestore.CollectionReference = null;
 
   constructor() {
     this._publish(this.count);
@@ -33,6 +35,7 @@ export class TestServiceService {
     console.log(firebase);
     this.db = firebase.firestore();
     this.userCollection = this.db.collection("users");
+    this.projectCollection = this.db.collection("projects");
   }
 
   private _publish = (data: any) => {
@@ -44,34 +47,46 @@ export class TestServiceService {
     this._publish(this.count);
   }
 
-  public getProject() {
+  public getProject(userId) {
     console.log("geting data from firestore: ");
-    from(this.userCollection.get()).subscribe(resp => {
-      console.log("gotten data: ", resp);
-    });
-
-    this.userCollection
-      .where("name", "==", "eniola")
-      .get()
-      .then(resp => console.log("data: ", resp.metadata));
+    return from(this.projectCollection.where("userId", "==", userId).get());
   }
-  public addUser() {
-    from(
-      this.userCollection.doc("eniola__1234").set({
-        name: "eniola olatunji",
-        password: "0932843934",
+  public addProject(projectId, project) {
+    console.log("geting data from firestore: ");
+    return from(this.projectCollection.doc(projectId).set(project));
+  }
+  public addUser(uid: string, data) {
+    return from(
+      this.userCollection.doc(uid).set({
+        name: data.username,
+        email: data.email,
         date: new Date()
       })
-    ).subscribe(resp => {
-      console.log(resp);
-      this.userCollection
-        .where("name", "==", "eniola")
-        .get()
-        .then(resp => {
-          resp.forEach(item => {
-            console.log("item: ", item.data());
-          });
-        });
+    );
+  }
+
+  public signUpUser(regData: any) {
+    return from(
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(regData.email, regData.password)
+    );
+  }
+  public addUserToFireStore(data) {
+    return;
+  }
+  public loginUser(email: string, password: string) {
+    return from(firebase.auth().signInWithEmailAndPassword(email, password));
+  }
+  public logoutUser() {
+    return from(firebase.auth().signOut());
+  }
+  public currentUser() {
+    return firebase.auth().currentUser;
+  }
+  public onAuthStateChanged() {
+    return new Observable(observe => {
+      firebase.auth().onAuthStateChanged(user => observe.next(user));
     });
   }
 }

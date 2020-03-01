@@ -8,6 +8,12 @@
     <div class="header">
       <span class="dot"></span
       >{{ activeProject.name || "- no project available -" }}
+      <div class="status">
+        <div (click)="clickStatus($event)">
+          <i *ngIf="!annotation" class="fas fa-sign-in-alt"></i>
+          <span *ngIf="annotation">{{ annotation }}</span>
+        </div>
+      </div>
     </div>
     <div class="body">
       <ng-content select="div[class='center']"></ng-content>

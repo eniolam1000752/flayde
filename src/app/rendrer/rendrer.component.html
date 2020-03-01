@@ -1,1 +1,44 @@
-<p>Rendrer coming soon...</p>
+<div style="width: 100%;height: 100%; position: relative;">
+  <div class="btn-suite">
+    <ng-content></ng-content>
+  </div>
+  <div (mousewheel)="disableBrowserZoom($event)" class="renderer">
+    <div
+      (mousewheel)="zoomHandler($event)"
+      class="view-port"
+      [ngStyle]="{
+        transform: !isLoading ? 'scale(' + zoomIndex + ')' : null,
+        'margin-left': !isLoading
+          ? zoomIndex > 1
+            ? 3 * (zoomIndex - 1) * 100 + 'px'
+            : '0px'
+          : null
+      }"
+    >
+      <ng-container *ngIf="!isLoading"
+        ><div *ngFor="let row of data" class="H-view">
+          <div
+            *ngFor="let col of row"
+            [ngClass]="{ block: true }"
+            [ngStyle]="{
+              'background-color': !col.id ? 'transparent' : col.color
+            }"
+          >
+            {{ col.id }}
+          </div>
+        </div></ng-container
+      >
+
+      <img
+        *ngIf="!data[0][0]"
+        width="370px"
+        height="300px"
+        src="../../assets/icons/idle.png"
+      /><br /><br />
+      <span *ngIf="!data[0][0]" class="render-label"
+        >😄 Notting to render at the moment</span
+      >
+    </div>
+  </div>
+</div>
+<!-- 'margin-left': 3 * (zoomIndex - 1) * 100 + 'px' -->

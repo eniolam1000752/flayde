@@ -3,13 +3,15 @@
     <ng-content select="div[class='header']"></ng-content>
   </div>
   <div class="item-container">
-    <div class="item" *ngFor="let item of renderData">
-      <ng-template
-        ngFor
-        let-item
-        [ngForOf]="[item]"
-        [ngForTemplate]="listItem"
-      ></ng-template>
+    <div [ngClass]="{ collapse: isCollapsed, noCollapse: !isCollapsed }">
+      <div class="item" *ngFor="let item of renderData">
+        <ng-template
+          ngFor
+          let-item
+          [ngForOf]="[item]"
+          [ngForTemplate]="listItem"
+        ></ng-template>
+      </div>
     </div>
   </div>
 </div>

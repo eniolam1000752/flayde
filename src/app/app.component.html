@@ -1,7 +1,23 @@
 <ng-template #centerContent>
-  <ng-container>
-    <app-rendrer></app-rendrer>
-  </ng-container>
+  <app-rendrer
+    [data]="
+      activeProject.result
+        ? activeProject.result
+          ? activeProject.result.result
+          : [[]]
+        : [[]]
+    "
+    [isLoading]="isGenResult"
+  >
+    <div class="suit-section">
+      <app-button [type]="'rounded'">
+        <span style="font-size: 13px">Nodal Layout</span>
+      </app-button>
+      <app-button [type]="'rounded'" [bgcolor]="'#828282'">
+        <span style="font-size: 13px;">Layout 2</span>
+      </app-button>
+    </div>
+  </app-rendrer>
 </ng-template>
 
 <ng-template #leftContent>
@@ -186,13 +202,20 @@
 
   <div class="v-space"></div>
 
-  <app-list [renderData]="legend">
-    <div class="header">
+  <app-list [renderData]="legend" [isCollapsed]="weightCollapsed">
+    <div
+      (click)="weightCollapsed = !weightCollapsed"
+      class="header"
+      style="cursor: pointer;"
+    >
       <div class="list-header">
-        <span>Weight Legend</span>
-        <!-- <app-button type="flat round" bgcolor="transparent">
-          <i class="fas fa-plus"></i>
-        </app-button> -->
+        <span>
+          Weight Legend &nbsp;&nbsp;&nbsp;<span
+            class="fas fa-angle-down"
+            style="margin-top: 5px;"
+          >
+          </span>
+        </span>
       </div>
     </div>
     <ng-template let-item>
@@ -218,7 +241,12 @@
   <div
     style="width: 100%; display: flex; justify-content: center; align-items: center;"
   >
-    <app-button type="rounded">Generate</app-button>
+    <app-button
+      *ngIf="activeProject.id"
+      type="rounded"
+      (clicked)="generateLayoutMatrix()"
+      >Generate</app-button
+    >
   </div>
 </ng-template>
 
@@ -231,6 +259,22 @@
       [placeholder]="'Project alias'"
       (enterPressed)="createNewProject()"
     ></app-input-field>
+    <br /><br />
+    <app-list [renderData]="projectTypes">
+      <div class="header"><b>Layout Type</b><br /></div>
+      <ng-template let-item>
+        <div class="radio-item" (click)="onSelectLayoutType(item)">
+          <i
+            [ngClass]="{
+              far: true,
+              'fa-dot-circle': newProject.layoutType === item,
+              'fa-circle': newProject.layoutType !== item
+            }"
+          ></i>
+          &nbsp;&nbsp;{{ item }}
+        </div>
+      </ng-template>
+    </app-list>
   </div>
 </ng-template>
 
@@ -412,7 +456,87 @@
   <br /><br />
 </ng-template>
 
-<app-modal [headerText]="modalHeaderTitle" #modal [allowBackLayClick]="true">
+<ng-template #register>
+  <div style="width: 70%">
+    <app-input-field
+      [text]="auth.username"
+      [type]="'text'"
+      placeholder="Username"
+      (changeText)="onTextChanged($event, 'user')"
+    ></app-input-field>
+    <br />
+    <app-input-field
+      [text]="auth.email"
+      [type]="'text'"
+      placeholder="Email"
+      (changeText)="onTextChanged($event, 'email')"
+    ></app-input-field>
+    <br />
+    <app-input-field
+      [text]="auth.password"
+      type="password"
+      placeholder="Password"
+      (changeText)="onTextChanged($event, 'password')"
+    ></app-input-field
+    ><br />
+    <app-input-field
+      [text]="auth.cpassword"
+      type="password"
+      placeholder="Confirm password"
+      (changeText)="onTextChanged($event, 'cpassword')"
+    ></app-input-field>
+    <br />
+    <span style="color: red; font-size: 15px; font-weight: bold;">{{
+      regMsg
+    }}</span>
+    <br /><br />
+  </div>
+</ng-template>
+
+<ng-template #login>
+  <div *ngIf="!currentUser.email" style="width: 70%">
+    <app-input-field
+      [text]="signIn.email"
+      [type]="'text'"
+      placeholder="Email"
+      (changeText)="onTextChanged($event, 'semail')"
+    ></app-input-field>
+    <br />
+    <app-input-field
+      [text]="signIn.password"
+      type="password"
+      placeholder="Password"
+      (changeText)="onTextChanged($event, 'spassword')"
+    ></app-input-field
+    ><br />
+    <span style="color: red; font-size: 15px; font-weight: bold;">{{
+      signInMsg
+    }}</span>
+    <br /><br />
+  </div>
+  <div *ngIf="currentUser.email">
+    <span style="font-size: 23px;"> {{ currentUser.email }} </span><br /><br />
+    <app-button
+      (click)="logoutUser()"
+      [type]="'flat'"
+      [color]="'#a80044'"
+      [bgcolor]="'transparent'"
+      ><span style="font-size: 15px;">Sign out</span></app-button
+    >
+  </div>
+</ng-template>
+
+<app-splash
+  [shouldShow]="showSplash"
+  [slashText]="'Fetching data please wait ...'"
+></app-splash>
+
+<app-modal
+  [headerText]="modalHeaderTitle"
+  #modal
+  [allowBackLayClick]="modalContent !== 'register' && modalContent !== 'login'"
+  [isLoading]="isLoading"
+>
   <div class="close-btn">
     <app-button
       type="flat"
@@ -436,6 +560,12 @@
       <ng-container *ngSwitchCase="'e-inputConfig'">
         <ng-container *ngTemplateOutlet="editInputConfig"> </ng-container>
       </ng-container>
+      <ng-container *ngSwitchCase="'register'">
+        <ng-container *ngTemplateOutlet="register"> </ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'login'">
+        <ng-container *ngTemplateOutlet="login"> </ng-container>
+      </ng-container>
       <ng-container *ngSwitchDefault>
         <div
           style="display:flex; justify-content:center; align-items:center; width: 100%; "
@@ -448,6 +578,7 @@
   <div class="v-space"></div>
   <div class="footer">
     <app-button
+      *ngIf="!(modalContent === 'login' && currentUser.email)"
       type="rounded"
       (clicked)="
         modalContent === 'layout'
@@ -458,16 +589,61 @@
           ? addRelationshipsToProject(activeProject.id)
           : modalContent === 'e-inputConfig'
           ? toggleModal()
+          : modalContent === 'register'
+          ? registerUser()
+          : modalContent === 'login'
+          ? loginUser()
           : null
       "
-      >{{ modalContent === "e-inputConfig" ? "Edit" : "Create" }}</app-button
+      >{{
+        modalContent === "e-inputConfig"
+          ? "Edit"
+          : modalContent === "login"
+          ? "Sign In"
+          : modalContent === "register"
+          ? "Sign Up"
+          : "Create"
+      }}</app-button
     >
   </div>
 </app-modal>
 <app-toast #toast [text]="toastMessage"></app-toast>
+<app-top-toast #topToast>
+  <ng-container>
+    <div align="left">
+      <span><b>Sign Up</b></span>
+      <br />
+      <span style="margin-top: 30px">
+        Unable to save project because you are yet sign in. You can
+        <i><b>sign in or up</b></i> in order to save and initate project
+        optimization</span
+      >
+      <br /><br />
+      <div style="display:flex; flex-direction: row;">
+        <app-button type="rounded" color="'white'" (clicked)="showLogin()">
+          <span style="font-size: 13px">sign in</span>
+        </app-button>
+        <div>&nbsp;&nbsp;&nbsp;</div>
+        <app-button
+          (click)="showRegister()"
+          type="rounded"
+          [bgcolor]="'white'"
+          color="red"
+        >
+          <span style="font-size: 13px">sign up</span>
+        </app-button>
+      </div>
+    </div>
+  </ng-container>
+</app-top-toast>
 
-<app-layout #layout [activeProject]="activeProject">
-  <div class="center">
+<app-layout
+  #layout
+  [activeProject]="activeProject"
+  (statusClicked)="statusClicked()"
+  [user]="currentUser.email ? currentUser.email[0].toUpperCase() : ''"
+>
+  <div style="width: 100%; height: 100%" class="center">
     <ng-container *ngTemplateOutlet="centerContent"></ng-container>
   </div>
   <div class="left" style="width: 100%;">

@@ -17,6 +17,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { ListComponent } from './list/list.component';
 import { ModalComponent } from './modal/modal.component';
 import { RendrerComponent } from './rendrer/rendrer.component';
+import { TopToastComponent } from './top-toast/top-toast.component';
+import { SplashComponent } from './splash/splash.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { RendrerComponent } from './rendrer/rendrer.component';
     LoaderComponent,
     ListComponent,
     ModalComponent,
-    RendrerComponent
+    RendrerComponent,
+    TopToastComponent,
+    SplashComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TestServiceService],

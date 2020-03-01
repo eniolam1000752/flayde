@@ -17,8 +17,16 @@ import { TestServiceService } from "./test-service.service";
 import { ModalComponent } from "./modal/modal.component";
 import { ButtonComponent } from "./button/button.component";
 import { LayoutComponent } from "./layout/layout.component";
-import { Project, InputConfig, Department, MatrixData } from "./Interfaces";
+import {
+  Project,
+  InputConfig,
+  Department,
+  MatrixData,
+  LayoutMatrix,
+  Result
+} from "./Interfaces";
 import { ToastComponent } from "./toast/toast.component";
+import { Optimization } from "./optimization";
 
 interface ColorObj {
   color: string;
@@ -44,6 +52,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild("toast", { static: false })
   public toastRef: ToastComponent;
+
+  @ViewChild("topToast", { static: false })
+  public topToast: ToastComponent;
 
   public collapsableClass = { collapsable: true, "no-collapse": true };
   public modalContent = "";
@@ -79,9 +90,17 @@ export class AppComponent implements OnInit, AfterViewInit {
   public weightMatrix: MatrixData;
   public selectedInputWeightObj = {};
 
+  public projectTypes: Array<string> = [
+    "Process Layout",
+    "Product Layout",
+    "Combination layout",
+    "Fixed position Layout",
+    "Group Layout"
+  ] as string[];
+
   public newProject: Project = {
     name: "",
-    description: "No description provided for this project."
+    layoutType: this.projectTypes[0]
   } as Project;
   public projects: Project[] = [];
   public indexedProjects: any = {};
@@ -94,16 +113,115 @@ export class AppComponent implements OnInit, AfterViewInit {
   public deptAlias: string = "";
   public inputAlias: string = "";
   public toastMessage: string = "";
+  public isLoading: boolean = false;
+  public showSplash: boolean = true;
+  public weightCollapsed = true;
 
   public editSelectedRelationship: InputConfig = {} as InputConfig;
   public selectedProjectId = "";
+  public resultData: LayoutMatrix;
+  public isGenResult: boolean = true;
+  public auth = { email: "", password: "", cpassword: "", username: "" };
+  public signIn = { email: "", password: "" };
+  public regMsg = "";
+  public signInMsg = "";
+  public currentUser: any = {};
+  public allowModalDissmiss = true;
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
   }
 
-  ngOnInit() {}
-  ngAfterViewInit() {}
+  ngOnInit() {
+    window.addEventListener("keydown", event => {
+      if (event.ctrlKey && event.key === "s") {
+        event.preventDefault();
+        if (!this.currentUser.email) {
+          this.topToast.showToast();
+        } else {
+          if (!this.activeProject.id) return 0;
+          const temp = { ...this.activeProject };
+          console.log(temp);
+          if (temp.result.result.length || temp.result.result.length === 0) {
+            temp.result = {
+              ...temp.result,
+              result: this.serializeArr(temp.result.result)
+            };
+          }
+          this.globals.addProject(temp.id, temp).subscribe(
+            resp => {
+              this.toastMessage = "😁 No worries data has been saved";
+              this.toastRef.showToast();
+            },
+            err => {
+              this.toastMessage = "😬 Unable to save data";
+              this.toastRef.showToast();
+            }
+          );
+        }
+      }
+    });
+  }
+  ngAfterViewInit() {
+    const setShouldShowSplash = state => {
+      this.showSplash = state;
+    };
+    this.globals.onAuthStateChanged().subscribe(user => {
+      if (user) this.initUserProject(user, setShouldShowSplash);
+      else this.uninitUserProject(setShouldShowSplash);
+    });
+  }
+
+  initUserProject(user, awaitFlag?) {
+    console.log("user: ", user);
+    this.currentUser = user || {};
+    this.projects = [];
+    this.indexedProjects = {};
+    this.activeProject = {} as Project;
+    this.opendProjects = [];
+    this.globals.getProject(this.currentUser.uid).subscribe(
+      collection => {
+        console.log("collection list of projects: ", collection);
+        collection.forEach(item => {
+          const project: Project = item.data() as Project;
+          project.result.result = Object.values(project.result.result);
+          // console.log("doc items: ", item.data(), project);
+          this.projects.push(project);
+          this.indexedProjects[project.id] = project;
+          awaitFlag(false);
+        });
+        this.collapseProjects();
+        if (this.projects[0]) this.activeProject = this.projects[0];
+        if (this.projects[0]) this.opendProjects.push(this.projects[0]);
+      },
+      err => {
+        console.log("error getting projects: ", err);
+        awaitFlag(false);
+      }
+    );
+  }
+  uninitUserProject(awaitFlag?) {
+    this.currentUser = {};
+    this.projects = [];
+    this.indexedProjects = {};
+    this.activeProject = {} as Project;
+    this.opendProjects = [];
+    awaitFlag(false);
+  }
+
+  generateLayoutMatrix = () => {
+    if (!this.currentUser.email) {
+      this.topToast.showToast();
+      return 0;
+    }
+    let optimizer = new Optimization(this.activeProject);
+    this.isGenResult = false;
+    let runner = optimizer.run();
+    runner.subscribe((resp: Result) => {
+      console.log(resp);
+      this.activeProject.result = resp;
+    });
+  };
 
   toggleRightPane() {
     this.layoutRef.colapseRightPane();
@@ -138,15 +256,37 @@ export class AppComponent implements OnInit, AfterViewInit {
       case "e-relationship":
         this.editSelectedRelationship.name = event;
         break;
+      case "email":
+        this.auth.email = event;
+        break;
+      case "password":
+        this.auth.password = event;
+        break;
+      case "cpassword":
+        this.auth.cpassword = event;
+        break;
+      case "user":
+        this.auth.username = event;
+        break;
+      case "semail":
+        this.signIn.email = event;
+        break;
+      case "spassword":
+        this.signIn.password = event;
+        break;
       default:
         break;
     }
   }
 
   showAddLayoutProject() {
-    this.modalContent = "layout";
-    this.modalHeaderTitle = "Add new Layout project";
-    this.toggleModal();
+    if (this.currentUser.email) {
+      this.modalContent = "layout";
+      this.modalHeaderTitle = "Add new Layout project";
+      this.toggleModal();
+    } else {
+      this.topToast.showToast();
+    }
   }
   showAddLayoutDepartment() {
     if (this.activeProject.id) {
@@ -181,6 +321,20 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.toastRef.showToast();
     }
   }
+  showRegister() {
+    this.modalContent = "register";
+    this.modalHeaderTitle = "Sign Up";
+    this.toggleModal();
+    this.topToast.hideToast();
+    this.allowModalDissmiss = false;
+  }
+  showLogin() {
+    this.modalContent = "login";
+    this.modalHeaderTitle = !this.currentUser.email ? "Sign In" : "Sign Out";
+    this.toggleModal();
+    this.topToast.hideToast();
+    this.allowModalDissmiss = false;
+  }
   onSelectColor(colorObj) {
     this.selectedColor = colorObj;
   }
@@ -205,6 +359,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         break;
     }
   }
+
+  onSelectLayoutType(layout) {
+    this.newProject.layoutType = layout;
+  }
+
   setSelectedInputWeight(event, data) {
     if (event) event.stopPropagation();
 
@@ -230,12 +389,20 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  serializeArr = (array: Array<any>) => {
+    return array.reduce((cum, item, index) => {
+      cum[index] = item;
+      return cum;
+    }, {});
+  };
+
   createNewProject() {
     try {
       this.projectAddValidation();
       const projectClone: Project = {
         ...this.newProject,
         id: `project-${(Math.random() + "").slice(2, 15)}`,
+        userId: this.currentUser.uid,
         departments: [],
         created: new Date(),
         numberOfDept: 0,
@@ -245,15 +412,33 @@ export class AppComponent implements OnInit, AfterViewInit {
         isRunning: false,
         lastExec: null,
         inputConfigs: [],
-        activeInputConfig: {}
+        activeInputConfig: {},
+        description: "No description provided for this project.",
+        result: { result: [[]] } as Result
       } as Project;
+      const temp = Object.assign({}, projectClone);
+      console.log(temp);
+      if (temp.result.result.length || temp.result.result.length === 0) {
+        temp.result.result = this.serializeArr(temp.result.result);
+      }
 
-      this.projects.push(projectClone);
-      this.indexedProjects[projectClone.id] = projectClone;
-      this.loadSelectedProject(projectClone);
-      this.collapseProjects();
-      this.toggleModal();
-      this.newProjectInputFieldMsg = "";
+      this.isLoading = true;
+      this.globals.addProject(projectClone.id, temp).subscribe(
+        resp => {
+          console.log("project added successfully: ", resp);
+          this.projects.push(projectClone);
+          this.indexedProjects[projectClone.id] = projectClone;
+          this.loadSelectedProject(projectClone);
+          this.collapseProjects();
+          this.isLoading = false;
+          this.toggleModal();
+          this.newProjectInputFieldMsg = "";
+        },
+        err => {
+          this.isLoading = false;
+          console.log("error adding project: ", err);
+        }
+      );
     } catch (exp) {
       this.newProjectInputFieldMsg = exp.message;
       this.toastMessage = exp.message;
@@ -288,7 +473,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   selectProject(project: Project, id) {
     this.activeProject = this.indexedProjects[id];
-    // this.loadInputConfig();
   }
 
   addDeptToProject(project: Project, id) {
@@ -361,6 +545,109 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.modalContent = "e-inputConfig";
     this.toggleModal();
     console.log(this.editSelectedRelationship);
+  }
+
+  logoutUser() {
+    this.globals.logoutUser().subscribe(
+      resp => {
+        console.log("user logged out: ", resp);
+        // this.toggleModal();
+      },
+      err => {
+        console.log("unable to logout user: ", err);
+      }
+    );
+    this.currentUser = {};
+  }
+
+  loginUser() {
+    console.log("login in user: ", this.signIn);
+    if (this.signIn.password.trim().length === 0) {
+      this.toastMessage = "password field can not be empty";
+      this.signInMsg = "password field can not be empty";
+      this.toastRef.showToast();
+      return 0;
+    }
+    if (this.signIn.email.trim().length === 0) {
+      this.toastMessage = "email field can not be empty";
+      this.signInMsg = "email field can not be empty";
+      this.toastRef.showToast();
+      return 0;
+    }
+    this.isLoading = true;
+    this.signInMsg = "";
+    setTimeout(() => {
+      this.signIn.password = "";
+    }, 2000);
+    this.globals.loginUser(this.signIn.email, this.signIn.password).subscribe(
+      resp => {
+        console.log("user: ", resp);
+        // this.initUserProject(resp.user);
+        this.allowModalDissmiss = true;
+        this.isLoading = false;
+        this.toastMessage = "Welcome " + resp.user.email;
+        this.toastRef.toggle();
+        this.toggleModal();
+      },
+      err => {
+        console.log("not signed in: ", err);
+        this.toastMessage = err.message;
+        this.signInMsg = err.message;
+        this.isLoading = false;
+        this.toastRef.showToast();
+      }
+    );
+  }
+
+  registerUser() {
+    console.log("signing up user: ", this.auth);
+    if (this.auth.password !== this.auth.cpassword) {
+      this.toastMessage = "confirm password does not corrolate";
+      this.regMsg = "confirm password does not corrolate";
+      this.toastRef.showToast();
+      return 0;
+    }
+    if (this.auth.password.trim().length === 0) {
+      this.toastMessage = "password field can not be empty";
+      this.regMsg = "password field can not be empty";
+      this.toastRef.showToast();
+      return 0;
+    }
+    if (this.auth.email.trim().length === 0) {
+      this.toastMessage = "email field can not be empty";
+      this.regMsg = "email field can not be empty";
+      this.toastRef.showToast();
+      return 0;
+    }
+    this.isLoading = true;
+    this.globals.signUpUser(this.auth).subscribe(
+      resp => {
+        console.log(resp);
+        this.globals.addUser(resp.user.uid, this.auth).subscribe(
+          fireStoreAdded => {
+            console.log("add to fire store: ", fireStoreAdded);
+            this.allowModalDissmiss = true;
+            this.isLoading = false;
+          },
+          fireStoreErr => {
+            console.log("not added to firestore: ", fireStoreErr);
+            this.isLoading = false;
+          }
+        );
+      },
+      err => {
+        console.log(err);
+        this.toastMessage = err.message;
+        this.regMsg = err.message;
+
+        this.isLoading = false;
+        this.toastRef.showToast();
+      }
+    );
+  }
+
+  public statusClicked() {
+    this.showLogin();
   }
 
   private departmentAddValidation(deptInstance: Department, project: Project) {
