@@ -67,7 +67,7 @@
         <app-list [renderData]="projects">
           <div class="header"></div>
           <ng-template let-item>
-            <div>
+            <div class="project-item">
               <img
                 [src]="
                   item.id === activeProject.id
@@ -80,8 +80,15 @@
                 type="flat"
                 (clicked)="loadSelectedProject(item)"
               >
-                <span style="color: black;">{{ item.name }}</span>
+                <span style="color: black;">{{
+                  item.name.length > 11
+                    ? item.name.slice(0, 12) + " .."
+                    : item.name
+                }}</span>
               </app-button>
+              <div (click)="deleteProject(item)" class="delete-btn">
+                <i class="far fa-trash-alt"></i>
+              </div>
             </div>
           </ng-template>
         </app-list>
@@ -161,7 +168,7 @@
   <app-list [renderData]="activeProject.inputConfigs">
     <div class="header">
       <div class="list-header">
-        <span>Input config</span>
+        <span>Departmental Relationships</span>
         <app-button
           type="flat round"
           bgcolor="transparent"
@@ -526,6 +533,16 @@
   </div>
 </ng-template>
 
+<ng-template #alert>
+  <span></span>
+  <div
+    style="width: 100%; display: flex; flex-direction: row;justify-content: space-between; padding-left: 20px; padding-right: 20ppx;"
+  >
+    <app-button>No</app-button>
+    <app-button>Yes</app-button>
+  </div>
+</ng-template>
+
 <app-splash
   [shouldShow]="showSplash"
   [slashText]="'Fetching data please wait ...'"
@@ -565,6 +582,9 @@
       </ng-container>
       <ng-container *ngSwitchCase="'login'">
         <ng-container *ngTemplateOutlet="login"> </ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'alert'">
+        <ng-container *ngTemplateOutlet="alert"> </ng-container>
       </ng-container>
       <ng-container *ngSwitchDefault>
         <div

@@ -65,6 +65,10 @@ export class TestServiceService {
     );
   }
 
+  public removeProject(projectId) {
+    return from(this.projectCollection.doc(projectId).delete());
+  }
+
   public signUpUser(regData: any) {
     return from(
       firebase

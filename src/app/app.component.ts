@@ -115,6 +115,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public toastMessage: string = "";
   public isLoading: boolean = false;
   public showSplash: boolean = true;
+  public showDeleteProject: boolean = false;
   public weightCollapsed = true;
 
   public editSelectedRelationship: InputConfig = {} as InputConfig;
@@ -133,6 +134,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.weightCollapsed = false;
     window.addEventListener("keydown", event => {
       if (event.ctrlKey && event.key === "s") {
         event.preventDefault();
@@ -163,9 +165,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    const setShouldShowSplash = state => {
-      this.showSplash = state;
-    };
+    setTimeout(() => (this.weightCollapsed = true), 2000);
+    const setShouldShowSplash = state => (this.showSplash = state);
     this.globals.onAuthStateChanged().subscribe(user => {
       if (user) this.initUserProject(user, setShouldShowSplash);
       else this.uninitUserProject(setShouldShowSplash);
@@ -188,8 +189,8 @@ export class AppComponent implements OnInit, AfterViewInit {
           // console.log("doc items: ", item.data(), project);
           this.projects.push(project);
           this.indexedProjects[project.id] = project;
-          awaitFlag(false);
         });
+        awaitFlag(false);
         this.collapseProjects();
         if (this.projects[0]) this.activeProject = this.projects[0];
         if (this.projects[0]) this.opendProjects.push(this.projects[0]);
@@ -334,6 +335,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.toggleModal();
     this.topToast.hideToast();
     this.allowModalDissmiss = false;
+  }
+  showAlert(){
+    
   }
   onSelectColor(colorObj) {
     this.selectedColor = colorObj;
@@ -648,6 +652,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public statusClicked() {
     this.showLogin();
+  }
+
+  public deleteProject(project: Project) {
+    this.globals.removeProject(project.id).subscribe(
+      resp => {
+        console.log("delete success: ", resp);
+        delete this.indexedProjects[project.id];
+        this.projects = Object.values(this.indexedProjects);
+        this.opendProjects = this.opendProjects.filter(
+          item => item.id !== project.id
+        );
+        this.activeProject = this.projects[0] || ({} as Project);
+      },
+      err => {
+        console.log("unable to delete project: ", err);
+      }
+    );
   }
 
   private departmentAddValidation(deptInstance: Department, project: Project) {
