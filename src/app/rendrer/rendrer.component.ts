@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import { LayoutMatrix } from "../Interfaces";
 
 @Component({
@@ -6,9 +6,10 @@ import { LayoutMatrix } from "../Interfaces";
   templateUrl: "./rendrer.component.html",
   styleUrls: ["./rendrer.component.scss"]
 })
-export class RendrerComponent implements OnInit {
+export class RendrerComponent implements OnInit, OnChanges {
   private isCtrlPressed = false;
   public zoomIndex = 1;
+  public zoomIndexReverse = 1;
 
   @Input("data")
   public data: LayoutMatrix;
@@ -25,15 +26,22 @@ export class RendrerComponent implements OnInit {
       this.isCtrlPressed = event.key === "Control" ? false : true;
     });
   }
+  ngOnChanges() {
+    console.log(this.data);
+  }
 
   zoomHandler(event) {
     if (event.ctrlKey) event.preventDefault();
     const delta = event.deltaY;
     let mockZoomIndex = this.zoomIndex;
     mockZoomIndex += 0.2 * ((-1 * delta) / 100);
-    // console.log("zoom: ", mockZoomIndex, delta);
     if (event.ctrlKey && mockZoomIndex < 2.2 && mockZoomIndex > 0.5) {
       this.zoomIndex += 0.2 * ((-1 * delta) / 100);
+      // if (delta === Math.abs(delta)) {
+      this.zoomIndexReverse += delta * 0.001;
+      console.log("zoom: ", delta, this.zoomIndexReverse);
+      // } else {
+      // }
     }
   }
   disableBrowserZoom(event) {

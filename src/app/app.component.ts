@@ -147,7 +147,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           if (temp.result.result.length || temp.result.result.length === 0) {
             temp.result = {
               ...temp.result,
-              result: this.serializeArr(temp.result.result)
+              result: this.objectifyArray(temp.result.result)
             };
           }
           this.globals.addProject(temp.id, temp).subscribe(
@@ -215,6 +215,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.topToast.showToast();
       return 0;
     }
+    console.log(this.activeProject, this.editSelectedRelationship);
     let optimizer = new Optimization(this.activeProject);
     this.isGenResult = false;
     let runner = optimizer.run();
@@ -336,9 +337,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.topToast.hideToast();
     this.allowModalDissmiss = false;
   }
-  showAlert(){
-    
-  }
+  showAlert() {}
   onSelectColor(colorObj) {
     this.selectedColor = colorObj;
   }
@@ -384,16 +383,18 @@ export class AppComponent implements OnInit, AfterViewInit {
           if (colItem.id === id) colItem.value = value;
         });
       });
+      this.activeProject.activeInputConfig.matrix = this.weightMatrix;
     } else {
       this.editSelectedRelationship.matrix.forEach(item => {
         item.rowData.forEach(colItem => {
           if (colItem.id === id) colItem.value = value;
         });
       });
+      this.activeProject.activeInputConfig = this.editSelectedRelationship;
     }
   }
 
-  serializeArr = (array: Array<any>) => {
+  objectifyArray = (array: Array<any>) => {
     return array.reduce((cum, item, index) => {
       cum[index] = item;
       return cum;
@@ -423,7 +424,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       const temp = Object.assign({}, projectClone);
       console.log(temp);
       if (temp.result.result.length || temp.result.result.length === 0) {
-        temp.result.result = this.serializeArr(temp.result.result);
+        temp.result.result = this.objectifyArray(temp.result.result);
       }
 
       this.isLoading = true;
@@ -462,17 +463,17 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   loadInputConfig() {
-    this.weightMatrix = this.activeProject.departments.map(
-      (item, rowIndex) => ({
-        rowData: this.activeProject.departments.map((item, colIndex) => ({
-          id: `value-${(Math.random() + "").slice(2, 15)}`,
-          value: 0,
-          pos: { i: rowIndex, j: colIndex },
-          departmentId: colIndex.toString()
-        })),
-        departmentId: rowIndex.toString()
-      })
-    ) as MatrixData;
+    this.weightMatrix = this.activeProject.departments.map((row, rowIndex) => ({
+      rowData: this.activeProject.departments.map((col, colIndex) => ({
+        id: `value-${(Math.random() + "").slice(2, 15)}`,
+        value: 0,
+        pos: { i: rowIndex, j: colIndex },
+        departmentId: col.id,
+        index: colIndex.toString()
+      })),
+      departmentId: row.id,
+      index: rowIndex.toString()
+    })) as MatrixData;
   }
 
   selectProject(project: Project, id) {
@@ -490,7 +491,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       right: "",
       top: "",
       bottom: "",
-      position: { x: 0, y: 0 }
+      position: { x: 0, y: 0 },
+      index: { ...this.activeProject }.departments.length + 1
     } as Department;
 
     try {
@@ -669,6 +671,31 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("unable to delete project: ", err);
       }
     );
+  }
+  public deleteDept(event, dept: Department) {
+    this.activeProject.departments = this.activeProject.departments.filter(
+      (item: Department) => item.id !== dept.id
+    );
+    const temp = { ...this.activeProject };
+    if (temp.result.result.length || temp.result.result.length === 0) {
+      temp.result = {
+        ...temp.result,
+        result: this.objectifyArray(temp.result.result)
+      };
+    }
+    console.log("deleting department", temp);
+    this.globals.addProject(temp.id, temp).subscribe(
+      resp => {
+        console.log("data has been deleted");
+      },
+      err => {
+        console.log("error deleting data");
+      }
+    );
+  }
+
+  removeRelConfig(deptId) {
+    this.activeProject.inputConfigs.filter(item => item.matrix.map);
   }
 
   private departmentAddValidation(deptInstance: Department, project: Project) {

@@ -16,11 +16,13 @@ interface colInputData {
   value: number;
   pos: IJPos;
   departmentId: string;
+  index: string;
 }
 
 interface rowInputData {
   rowData: Array<colInputData>;
   departmentId: string;
+  index: string;
 }
 
 export interface Result {
@@ -73,13 +75,25 @@ export interface Project {
   layoutType: string;
 }
 
-interface layoutDept {
+export interface LayoutDept {
   color: string;
   id: string;
+  deptId: string;
   area: number;
   width: number;
   height: number;
   breath: number;
+  deptName: string;
+  index: number;
 }
 
-export interface LayoutMatrix extends Array<Array<layoutDept>> {}
+export interface DeptRelationship {
+  vRel: Rel[];
+  hRel: Rel[];
+}
+interface Rel {
+  deptId: string;
+  relIndex: number;
+}
+
+export interface LayoutMatrix extends Array<Array<LayoutDept>> {}

@@ -134,12 +134,13 @@
           <div
             [ngClass]="{
               'badge-2':
-                activeProject.numberOfDept && activeProject.numberOfDept != 0
+                activeProject.departments &&
+                activeProject.departments.length != 0
             }"
           >
             {{
-              activeProject.numberOfDept && activeProject.numberOfDept != 0
-                ? activeProject.numberOfDept
+              activeProject.departments && activeProject.departments.length != 0
+                ? activeProject.departments.length
                 : ""
             }}
           </div>
@@ -153,11 +154,27 @@
         </app-button>
       </div>
     </div>
-    <ng-template let-item
-      ><div class="list-item">
-        <app-button type="flat" bgcolor="transparent" color="black">{{
-          item.name
-        }}</app-button>
+    <ng-template let-item>
+      <div class="list-item">
+        <div style="display: flex; flex-direction:row;">
+          <app-button type="flat" bgcolor="transparent" color="black">
+            <span
+              style="font-size: 13px;margin-right: 11px; background-color: #ddd; padding: 10px; padding-top: 6px; padding-bottom: 6px ;border-radius: 30px; transform: scale(0.7);"
+            >
+              <b>{{ item.index }}</b>
+            </span>
+            {{ item.name }}
+          </app-button>
+
+          <div
+            (click)="deleteDept($event, item)"
+            class="delete-btn"
+            style="transform: scale(0.86);"
+          >
+            <i class="far fa-trash-alt"></i>
+          </div>
+        </div>
+
         <div class="dot" [ngStyle]="{ 'background-color': item.color }"></div>
       </div>
     </ng-template>
@@ -368,13 +385,13 @@
     <div class="header row">
       <div class="col"><div class="chip header"></div></div>
       <div *ngFor="let headerCol of weightMatrix" class="col">
-        <div class="chip header">{{ headerCol.departmentId }}</div>
+        <div class="chip header">{{ headerCol.index }}</div>
       </div>
     </div>
 
     <div *ngFor="let rowValue of weightMatrix" class="row">
       <div class="col">
-        <div class="chip header">{{ rowValue.departmentId }}</div>
+        <div class="chip header">{{ rowValue.index }}</div>
       </div>
       <div *ngFor="let colValue of rowValue.rowData" class="col">
         <div
@@ -426,13 +443,13 @@
         *ngFor="let headerCol of editSelectedRelationship.matrix"
         class="col"
       >
-        <div class="chip header">{{ headerCol.departmentId }}</div>
+        <div class="chip header">{{ headerCol.index }}</div>
       </div>
     </div>
 
     <div *ngFor="let rowValue of editSelectedRelationship.matrix" class="row">
       <div class="col">
-        <div class="chip header">{{ rowValue.departmentId }}</div>
+        <div class="chip header">{{ rowValue.index }}</div>
       </div>
       <div *ngFor="let colValue of rowValue.rowData" class="col">
         <div

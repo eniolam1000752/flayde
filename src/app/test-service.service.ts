@@ -32,8 +32,12 @@ export class TestServiceService {
   constructor() {
     this._publish(this.count);
     firebase.initializeApp(this.firebaseConfig);
-    console.log(firebase);
     this.db = firebase.firestore();
+    firebase
+      .firestore()
+      .enablePersistence()
+      .then(resp => console.log("persistance enabled: ", resp))
+      .catch(err => console.log("unable to enable persistance: ", err));
     this.userCollection = this.db.collection("users");
     this.projectCollection = this.db.collection("projects");
   }

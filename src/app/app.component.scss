@@ -47,20 +47,24 @@
         font-weight: bold;
       }
     }
-    .delete-btn {
-      padding: 8px;
-      border-radius: 20px;
-      background-color: rgba(0, 0, 0, 0.1);
-      display: none;
-      flex-direction: row;
-      justify-content: center;
-      align-self: center;
-      cursor: pointer;
-    }
   }
   .project-item:hover .delete-btn {
     display: flex;
   }
+}
+
+.list-item:hover .delete-btn {
+  display: flex;
+}
+.delete-btn {
+  padding: 8px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
 }
 .collapsable::-webkit-scrollbar {
   width: 2px;

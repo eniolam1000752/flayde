@@ -15,20 +15,30 @@
           : null
       }"
     >
-      <ng-container *ngIf="!isLoading"
-        ><div *ngFor="let row of data" class="H-view">
+      <ng-container *ngIf="!isLoading">
+        <div *ngFor="let row of data" class="H-view">
           <div
             *ngFor="let col of row"
-            [ngClass]="{ block: true }"
+            [ngClass]="{ block: true, active: col.id }"
             [ngStyle]="{
               'background-color': !col.id ? 'transparent' : col.color
             }"
           >
-            {{ col.id }}
+            <div
+              [ngStyle]="{
+                transform: !isLoading ? 'scale(' + zoomIndexReverse + ')' : null
+              }"
+              *ngIf="col.id"
+              class="tool-tip"
+            >
+              <span style="font-weight: bolder;"><b>Department:</b></span
+              ><br />
+              <span>{{ col.deptName }}</span>
+            </div>
+            {{ col.index }}
           </div>
-        </div></ng-container
-      >
-
+        </div>
+      </ng-container>
       <img
         *ngIf="!data[0][0]"
         width="370px"
