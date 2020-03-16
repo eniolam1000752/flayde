@@ -27,6 +27,7 @@ import {
 } from "./Interfaces";
 import { ToastComponent } from "./toast/toast.component";
 import { Optimization } from "./optimization";
+import { RendrerComponent } from "./rendrer/rendrer.component";
 
 interface ColorObj {
   color: string;
@@ -55,6 +56,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild("topToast", { static: false })
   public topToast: ToastComponent;
+
+  @ViewChild("renderer", { static: false })
+  public renderer: RendrerComponent;
 
   public collapsableClass = { collapsable: true, "no-collapse": true };
   public modalContent = "";
@@ -632,6 +636,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.globals.addUser(resp.user.uid, this.auth).subscribe(
           fireStoreAdded => {
             console.log("add to fire store: ", fireStoreAdded);
+            this.toggleModal();
+            this.topToast.hideToast();
+            this.auth.cpassword = "";
+            this.auth.password = "";
+            this.auth.username = "";
+            this.auth.email = "";
             this.allowModalDissmiss = true;
             this.isLoading = false;
           },

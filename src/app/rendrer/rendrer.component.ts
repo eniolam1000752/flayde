@@ -38,7 +38,7 @@ export class RendrerComponent implements OnInit, OnChanges {
     if (event.ctrlKey && mockZoomIndex < 2.2 && mockZoomIndex > 0.5) {
       this.zoomIndex += 0.2 * ((-1 * delta) / 100);
       // if (delta === Math.abs(delta)) {
-      this.zoomIndexReverse += delta * 0.001;
+      this.zoomIndexReverse += delta * 0.0009;
       console.log("zoom: ", delta, this.zoomIndexReverse);
       // } else {
       // }
@@ -48,4 +48,8 @@ export class RendrerComponent implements OnInit, OnChanges {
     if (event.ctrlKey) event.preventDefault();
   }
   ctrlPressed() {}
+  resetZoom() {
+    this.zoomIndex = 1;
+    this.zoomIndexReverse = 1;
+  }
 }

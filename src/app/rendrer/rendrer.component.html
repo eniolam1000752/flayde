@@ -12,7 +12,13 @@
           ? zoomIndex > 1
             ? 3 * (zoomIndex - 1) * 100 + 'px'
             : '0px'
-          : null
+          : null,
+        'margin-top': !isLoading
+          ? zoomIndex > 1
+            ? 3 * (zoomIndex - 1) * 100 + 'px'
+            : '0px'
+          : null,
+        transition: 'all 0.5s'
       }"
     >
       <ng-container *ngIf="!isLoading">

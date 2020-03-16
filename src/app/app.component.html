@@ -8,8 +8,20 @@
         : [[]]
     "
     [isLoading]="isGenResult"
+    #renderer
   >
     <div class="suit-section">
+      <div
+        style="flex: 1; flex-direction: row; display: flex; justify-content: flex-start;"
+      >
+        <app-button
+          [color]="'white'"
+          [type]="'round'"
+          (clicked)="renderer.resetZoom()"
+        >
+          <i class="fas fa-redo-alt"></i>
+        </app-button>
+      </div>
       <app-button [type]="'rounded'">
         <span style="font-size: 13px">Nodal Layout</span>
       </app-button>
