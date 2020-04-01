@@ -31,8 +31,7 @@ enum BtnTypes {
   templateUrl: "./button.component.html",
   styleUrls: ["./button.component.scss"]
 })
-export class ButtonComponent
-  implements OnInit, DoCheck, OnDestroy, AfterViewChecked, AfterContentInit {
+export class ButtonComponent implements OnInit, OnChanges {
   @Input()
   public text: String;
   @Input()
@@ -41,6 +40,8 @@ export class ButtonComponent
   public bgColor: String;
   @Input("color")
   public color: String;
+  @Input()
+  public noBorder = false;
 
   @Output()
   public clicked = new EventEmitter<any>();
@@ -59,6 +60,9 @@ export class ButtonComponent
   public customStyle = {};
 
   constructor(public globals: TestServiceService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log()
+  }
 
   ngOnInit() {
     this.btnClass.flat = this.type === "flat";
@@ -72,22 +76,6 @@ export class ButtonComponent
       ...{ "background-color": this.bgColor, color: this.color }
     };
   }
-  ngAfterViewInit(): void {
-    // console.log("button has finished mounting");
-  }
-  ngAfterViewChecked(): void {
-    // console.log("finised checking for update on button: ");
-  }
-
-  ngOnDestroy() {
-    // console.log("button destroyed");
-  }
-
-  ngDoCheck() {
-    // console.log("do performing check: ");
-  }
-
-  ngAfterContentInit() {}
 
   onClick = args => {
     this.clicked.emit(args);

@@ -48,11 +48,13 @@
 .draw-out {
   transform: translate(-50%, 20px);
   opacity: 1;
+  display: flex;
   transition: all 0.2s ease-out;
 }
 
 .draw-in {
   transform: translate(-50%, 0px);
   opacity: 0;
+  display: none;
   transition: all 0.2s ease-in-out;
 }

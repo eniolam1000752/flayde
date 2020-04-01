@@ -105,7 +105,8 @@ export class Optimization {
           deptId: item.deptId,
           color: this.deptObject[item.deptId].color,
           deptName: this.deptObject[item.deptId].name,
-          index: this.deptObject[item.deptId].index
+          index: this.deptObject[item.deptId].index,
+          area: this.deptObject[item.deptId].dimension.area
         } as LayoutDept;
         this.deptObject[item.deptId].pos = { x: 0, y: 0 };
         this.placedDeptOnLayout.push(item.deptId);
@@ -183,7 +184,8 @@ export class Optimization {
               deptId: item.deptId,
               color: this.deptObject[item.deptId].color,
               deptName: this.deptObject[item.deptId].name,
-              index: this.deptObject[item.deptId].index
+              index: this.deptObject[item.deptId].index,
+              area: this.deptObject[item.deptId].dimension.area
             } as LayoutDept;
           } else {
             const pos = this.vPlacement(highestRel.deptId, item.deptId);
@@ -194,7 +196,8 @@ export class Optimization {
               deptId: item.deptId,
               color: this.deptObject[item.deptId].color,
               deptName: this.deptObject[item.deptId].name,
-              index: this.deptObject[item.deptId].index
+              index: this.deptObject[item.deptId].index,
+              area: this.deptObject[item.deptId].dimension.area
             } as LayoutDept;
           }
           this.placedDeptOnLayout.push(item.deptId);
@@ -275,13 +278,14 @@ export class Optimization {
           deptId: item.deptId,
           color: this.deptObject[item.deptId].color,
           deptName: this.deptObject[item.deptId].name,
-          index: this.deptObject[item.deptId].index
+          index: this.deptObject[item.deptId].index,
+          area: this.deptObject[item.deptId].dimension.area
         } as LayoutDept;
         this.placedDeptOnLayout.push(item.deptId);
         ++count;
       }
     }
-    for (let item of this.HVDeptRelationShips[deptId].hRel) {
+    for (const item of this.HVDeptRelationShips[deptId].hRel) {
       if (count < 2 && item.relIndex === 4) {
         console.log("around: ", deptId, " place: ", item.deptId);
         const pos = this.hPlacement(deptId, item.deptId);
@@ -292,7 +296,8 @@ export class Optimization {
           deptId: item.deptId,
           color: this.deptObject[item.deptId].color,
           deptName: this.deptObject[item.deptId].name,
-          index: this.deptObject[item.deptId].index
+          index: this.deptObject[item.deptId].index,
+          area: this.deptObject[item.deptId].dimension.area
         } as LayoutDept;
         this.placedDeptOnLayout.push(item.deptId);
         ++count;
@@ -301,8 +306,11 @@ export class Optimization {
   }
 
   run() {
-    let observable = new Observable(subscriber => {
+    const observable = new Observable(subscriber => {
       this.process();
+      this.result.result = [...this.result.result].filter(row =>
+        row.reduce((cum, col) => (!cum ? col.id !== undefined : true), false)
+      );
       subscriber.next(this.result);
       subscriber.complete();
     });

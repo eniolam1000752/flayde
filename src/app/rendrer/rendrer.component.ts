@@ -15,6 +15,8 @@ export class RendrerComponent implements OnInit, OnChanges {
   public data: LayoutMatrix;
   @Input("isLoading")
   public isLoading: boolean = true;
+  @Input("renderMode")
+  public renderMode = "plant";
 
   constructor() {}
 
@@ -26,6 +28,7 @@ export class RendrerComponent implements OnInit, OnChanges {
       this.isCtrlPressed = event.key === "Control" ? false : true;
     });
   }
+
   ngOnChanges() {
     console.log(this.data);
   }

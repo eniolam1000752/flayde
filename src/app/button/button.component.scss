@@ -41,13 +41,13 @@
   }
   button {
     font-size: 16px;
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     border: 0px solid transparent;
     color: $white;
     cursor: pointer;
   }
   button:hover {
-    background-color: $primary-color-2;
+    background-color: var(--primary-color-2);
   }
   button:active {
     user-select: none;

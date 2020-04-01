@@ -3,13 +3,13 @@ div.renderer {
   height: 100%;
   width: 100%;
   position: relative;
+  background-color: var(--background-color);
 
   .view-port {
     position: absolute;
     width: calc(100% - 6px);
     left: 6px;
     height: 100%;
-    background-color: rgba($color: #000000, $alpha: 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,8 +37,9 @@ div.renderer {
     width: 100px;
     height: 100px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
+    padding: 7px;
     margin-left: 1px;
     margin-right: 1px;
     position: relative;
@@ -48,16 +49,25 @@ div.renderer {
       display: none;
     }
   }
+
+  .nodal-block {
+    margin: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    position: relative;
+  }
   .block.clear {
     background-color: transparent;
   }
   .block:hover {
+    cursor: grab;
     .tool-tip {
       padding: 8px;
       min-width: 80px;
       min-height: 10px;
       max-width: 300px;
-      background: rgba($color: #000000, $alpha: 0.9);
+      background: rgba($color: black, $alpha: 0.9);
       border-radius: 6px;
       border-bottom-left-radius: 0px;
       margin-left: 10px;

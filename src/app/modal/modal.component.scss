@@ -31,7 +31,7 @@
         .loader {
           width: 20%;
           height: 100%;
-          background-color: $primary-color;
+          background-color: var(--primary-color);
           animation-name: loader-anime;
           animation-timing-function: linear;
           animation-duration: 1s;

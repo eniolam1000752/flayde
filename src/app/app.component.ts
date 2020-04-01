@@ -33,6 +33,11 @@ interface ColorObj {
   color: string;
   id: number;
 }
+interface ThemeObj {
+  color: string;
+  id: number;
+  theme: "default" | "1" | "2";
+}
 interface DimObj {
   width: number;
   height: number;
@@ -80,6 +85,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     { color: "#e08", id: 13 },
     { color: "#092", id: 14 }
   ];
+  public bgColors: ThemeObj[] = [
+    { color: "#ffd", id: 0, theme: "default" },
+    { color: "#999", id: 1, theme: "1" },
+    { color: "#676767", id: 2, theme: "2" }
+  ];
   public legend = [
     { code: "A", value: 4, priority: "Aboslutely Necessary" },
     { code: "E", value: 3, priority: "Especially important" },
@@ -93,6 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public modelDim: DimObj = { width: 0, height: 0, area: 0 };
   public weightMatrix: MatrixData;
   public selectedInputWeightObj = {};
+  public selectedTheme = this.bgColors[0];
 
   public projectTypes: Array<string> = [
     "Process Layout",
@@ -133,6 +144,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   public currentUser: any = {};
   public allowModalDissmiss = true;
 
+  public showColorToggle = false;
+  public renderMode = "plant";
+  public btnActive = { nodal: "#828282", plant: null };
+
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
   }
@@ -146,24 +161,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.topToast.showToast();
         } else {
           if (!this.activeProject.id) return 0;
-          const temp = { ...this.activeProject };
-          console.log(temp);
-          if (temp.result.result.length || temp.result.result.length === 0) {
-            temp.result = {
-              ...temp.result,
-              result: this.objectifyArray(temp.result.result)
-            };
-          }
-          this.globals.addProject(temp.id, temp).subscribe(
-            resp => {
-              this.toastMessage = "😁 No worries data has been saved";
-              this.toastRef.showToast();
-            },
-            err => {
-              this.toastMessage = "😬 Unable to save data";
-              this.toastRef.showToast();
-            }
-          );
+          this.saveActions();
         }
       }
     });
@@ -176,6 +174,27 @@ export class AppComponent implements OnInit, AfterViewInit {
       else this.uninitUserProject(setShouldShowSplash);
     });
   }
+
+  saveActions = () => {
+    const temp = { ...this.activeProject };
+    console.log(temp);
+    if (temp.result.result.length || temp.result.result.length === 0) {
+      temp.result = {
+        ...temp.result,
+        result: this.objectifyArray(temp.result.result)
+      };
+    }
+    this.globals.addProject(temp.id, temp).subscribe(
+      resp => {
+        this.toastMessage = "😁 No worries data has been saved";
+        this.toastRef.showToast();
+      },
+      err => {
+        this.toastMessage = "😬 Unable to save data";
+        this.toastRef.showToast();
+      }
+    );
+  };
 
   initUserProject(user, awaitFlag?) {
     console.log("user: ", user);
@@ -220,12 +239,11 @@ export class AppComponent implements OnInit, AfterViewInit {
       return 0;
     }
     console.log(this.activeProject, this.editSelectedRelationship);
-    let optimizer = new Optimization(this.activeProject);
     this.isGenResult = false;
-    let runner = optimizer.run();
-    runner.subscribe((resp: Result) => {
+    new Optimization(this.activeProject).run().subscribe((resp: Result) => {
       console.log(resp);
       this.activeProject.result = resp;
+      this.saveActions();
     });
   };
 
@@ -344,6 +362,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   showAlert() {}
   onSelectColor(colorObj) {
     this.selectedColor = colorObj;
+  }
+  showRegFromSignIn() {
+    this.modalContent = "register";
+    this.modalHeaderTitle = "Sign Up";
+    this.allowModalDissmiss = false;
+  }
+  showLoginFromSignUp() {
+    this.modalContent = "login";
+    this.modalHeaderTitle = !this.currentUser.email ? "Sign In" : "Sign Out";
+    this.allowModalDissmiss = false;
   }
 
   onEnterDim(event, type) {
@@ -473,10 +501,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         value: 0,
         pos: { i: rowIndex, j: colIndex },
         departmentId: col.id,
-        index: colIndex.toString()
+        index: col.index.toString()
       })),
       departmentId: row.id,
-      index: rowIndex.toString()
+      index: row.index.toString()
     })) as MatrixData;
   }
 
@@ -514,6 +542,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.deptAlias = "";
       this.selectedColor = this.colorList[0];
       this.modelDim = { width: 0, height: 0, area: 0 };
+      this.saveActions();
     } catch (exp) {
       console.log(exp.message);
       this.newDeptInputFieldMsg = exp.message;
@@ -536,6 +565,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.indexedProjects[projectId].activeInputConfig = relationship;
       this.inputAlias = "";
       this.toggleModal();
+      this.saveActions();
     } catch (exp) {
       this.newRelationshipInputFieldMsg = exp.message;
       this.toastMessage = exp.message;
@@ -661,9 +691,25 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     );
   }
+  onEditInputConfig() {
+    this.toggleModal();
+    this.saveActions();
+  }
 
   public statusClicked() {
     this.showLogin();
+  }
+
+  toogleRenderMode(mode) {
+    if (mode === "nodal") {
+      this.renderMode = "nodal";
+      this.btnActive.nodal = null;
+      this.btnActive.plant = "#828282";
+    } else {
+      this.renderMode = "plant";
+      this.btnActive.nodal = "#828282";
+      this.btnActive.plant = null;
+    }
   }
 
   public deleteProject(project: Project) {
@@ -702,6 +748,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("error deleting data");
       }
     );
+  }
+
+  changeTheme(theme) {
+    console.log(theme);
+    this.selectedTheme = theme;
   }
 
   removeRelConfig(deptId) {

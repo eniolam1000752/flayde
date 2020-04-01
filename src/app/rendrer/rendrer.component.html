@@ -23,26 +23,47 @@
     >
       <ng-container *ngIf="!isLoading">
         <div *ngFor="let row of data" class="H-view">
-          <div
-            *ngFor="let col of row"
-            [ngClass]="{ block: true, active: col.id }"
-            [ngStyle]="{
-              'background-color': !col.id ? 'transparent' : col.color
-            }"
-          >
+          <ng-container *ngIf="row.length !== 0">
             <div
-              [ngStyle]="{
-                transform: !isLoading ? 'scale(' + zoomIndexReverse + ')' : null
+              *ngFor="let col of row"
+              [ngClass]="{
+                block: renderMode === 'plant',
+                active: col.id,
+                'nodal-block': renderMode === 'nodal'
               }"
-              *ngIf="col.id"
-              class="tool-tip"
+              [ngStyle]="{
+                'background-color': !col.id ? 'transparent' : col.color
+              }"
             >
-              <span style="font-weight: bolder;"><b>Department:</b></span
-              ><br />
-              <span>{{ col.deptName }}</span>
+              <ng-container *ngIf="renderMode === 'plant'">
+                <div
+                  [ngStyle]="{
+                    transform: !isLoading
+                      ? 'scale(' + zoomIndexReverse + ')'
+                      : null
+                  }"
+                  *ngIf="col.id"
+                  class="tool-tip"
+                >
+                  <span style="font-weight: bolder;"><b>Department:</b></span
+                  ><br />
+                  <span>{{ col.deptName }}</span>
+                </div>
+                <b>{{ col.index }}</b>
+                <div
+                  style="display: flex; justify-content: center; align-items: center; flex: 1;"
+                >
+                  <span style="word-wrap: break-word;">
+                    <div *ngIf="col.area">Area(m<sup>2</sup>): &nbsp;</div>
+                    <!-- <br /> -->
+                    <div>
+                      <b>{{ col.area }}</b>
+                    </div>
+                  </span>
+                </div>
+              </ng-container>
             </div>
-            {{ col.index }}
-          </div>
+          </ng-container>
         </div>
       </ng-container>
       <img

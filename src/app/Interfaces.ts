@@ -52,7 +52,14 @@ export interface Department {
   bottom: string;
 }
 
-export interface User {}
+export interface User {
+  createdDate: Date;
+  lastVisitedDate: Date;
+  appConfig: AppConfig;
+  username: string;
+  email: string;
+  userId: string;
+}
 
 export interface Project {
   id: string;
@@ -97,3 +104,7 @@ interface Rel {
 }
 
 export interface LayoutMatrix extends Array<Array<LayoutDept>> {}
+
+export interface AppConfig {
+  theme: string;
+}

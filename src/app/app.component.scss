@@ -1,5 +1,30 @@
 @import "../styles.scss";
 
+@mixin themeAbstraction {
+  --primary-color: #a80044;
+  --primary-color-2: #da1966;
+  --secondary-color: #828282;
+  --secondary-color2: #f1f1f1;
+  --white-color: #fff;
+  --text-color: black;
+  --grey-color: #d9d9d9;
+  --indicator-color: #white;
+  --tootip-background-color: black;
+}
+.theme-default {
+  @include themeAbstraction();
+  --background-color: #ededed;
+}
+
+.theme-1 {
+  @include themeAbstraction();
+  --background-color: #aeaeae;
+}
+.theme-2 {
+  @include themeAbstraction();
+  --background-color: #797979;
+}
+
 .pane-section {
   width: 100%;
   display: flex;
@@ -11,6 +36,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+
   span {
     font-size: 14px;
     font-weight: bold;
@@ -23,6 +49,9 @@
     padding-right: 10px;
     font-size: 14px;
   }
+}
+.link {
+  color: var(--primary-color);
 }
 .collapsable {
   margin-top: 10px;
@@ -140,7 +169,7 @@
     }
   }
   .box-model div {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
     width: 200px;
     height: 110px;
     margin-right: 30px;
@@ -163,7 +192,7 @@
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background: $primary-color;
+  background: var(--primary-color);
   margin-left: 7px;
   margin-right: 7px;
   border: 1px solid transparent;
@@ -207,7 +236,7 @@
   height: 27px;
   border-radius: 4px;
   box-shadow: 0px 2px 6px rgba($color: #000000, $alpha: 0.3);
-  background-color: $primary-color;
+  background-color: var(--primary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,7 +252,7 @@
 }
 .chip.active {
   background-color: white;
-  color: $primary-color;
+  color: var(--primary-color);
 }
 .chip:not(.header):hover {
   box-shadow: 0px 3px 12px rgba($color: #000000, $alpha: 0.4);
@@ -273,6 +302,25 @@
   margin: 11px;
   cursor: pointer;
   i.fa-dot-circle {
-    color: $primary-color;
+    color: var(--primary-color);
   }
+}
+.color-toggle {
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #ddd;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.color-toggle.show {
+  max-width: 200px;
+  transition: all 0.1s linear;
+}
+.color-toggle.hide {
+  max-width: 11px;
+  transition: all 0.2s linear;
 }
