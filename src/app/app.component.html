@@ -20,7 +20,12 @@
     >
       <div class="suit-section">
         <div
-          style="flex: 1; flex-direction: row; display: flex; justify-content: flex-start;"
+          style="
+            flex: 1;
+            flex-direction: row;
+            display: flex;
+            justify-content: flex-start;
+          "
         >
           <app-button
             [color]="'white'"
@@ -41,7 +46,7 @@
               [bgcolor]="'#828282'"
               [type]="'round'"
               (clicked)="showColorToggle = !showColorToggle"
-              style="position:absolute; left: -20px;"
+              style="position: absolute; left: -20px;"
               t
             >
               <i class="fas fa-edit"></i>
@@ -64,7 +69,7 @@
           [bgcolor]="btnActive.nodal"
           (clicked)="toogleRenderMode('nodal')"
         >
-          <span style="font-size: 13px">Nodal Layout</span>
+          <span style="font-size: 13px;">Nodal Layout</span>
         </app-button>
         <app-button
           [type]="'rounded'"
@@ -79,23 +84,34 @@
 
   <ng-template #leftContent>
     <div
-      style="margin-top: 20px;margin-bottom: 20px;padding-left: 30px;font-size: 24px; font-weight: bold;
-  color: #a80044;"
+      style="
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 30px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #a80044;
+      "
     >
       FlayDe
     </div>
     <div
-      style="width: 100%; padding-top: 30px; padding-bottom: 30px; display: flex; flex-direction: row; justify-content: space-around;"
+      style="
+        width: 100%;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      "
     >
-      <app-button (clicked)="toggleRightPane(layout)" type="round">
+      <app-button type="round">
         <i #contentTest class="fas fa-bars"></i>
       </app-button>
-      <app-button (clicked)="toggleRightPane(layout)" type="round"
-        ><i class="fas fa-print"></i>
+      <app-button type="round"><i class="fas fa-print"></i> </app-button>
+      <app-button (clicked)="docsModal.toggleModal()" type="round">
+        <i class="far fa-question-circle"></i>
       </app-button>
-      <app-button (clicked)="toggleRightPane(layout)" type="round"
-        ><i class="far fa-question-circle"></i
-      ></app-button>
     </div>
 
     <div class="pane-section">
@@ -153,8 +169,8 @@
       </div>
     </div>
     <div class="pane-section">
-      <div style="width: 90%;padding-top: 30px; padding-bottom: 10px;">
-        <span style="font-weight: bold; font-size: 14px;margin-bottom: 16px;"
+      <div style="width: 90%; padding-top: 30px; padding-bottom: 10px;">
+        <span style="font-weight: bold; font-size: 14px; margin-bottom: 16px;"
           >Opened projects</span
         >
         <app-card
@@ -186,7 +202,7 @@
     <app-list [renderData]="activeProject.departments">
       <div class="header">
         <div class="list-header">
-          <span style="display: flex; flex-direction: row"
+          <span style="display: flex; flex-direction: row;"
             >Departments &nbsp;
             <div
               [ngClass]="{
@@ -214,10 +230,19 @@
       </div>
       <ng-template let-item>
         <div class="list-item">
-          <div style="display: flex; flex-direction:row;">
+          <div style="display: flex; flex-direction: row;">
             <app-button type="flat" bgcolor="transparent" color="black">
               <span
-                style="font-size: 13px;margin-right: 11px; background-color: #ddd; padding: 10px; padding-top: 6px; padding-bottom: 6px ;border-radius: 30px; transform: scale(0.7);"
+                style="
+                  font-size: 13px;
+                  margin-right: 11px;
+                  background-color: #ddd;
+                  padding: 10px;
+                  padding-top: 6px;
+                  padding-bottom: 6px;
+                  border-radius: 30px;
+                  transform: scale(0.7);
+                "
               >
                 <b>{{ item.index }}</b>
               </span>
@@ -268,7 +293,7 @@
             ></i>
             &nbsp; {{ item.name }}</app-button
           >
-          <div style="transform: scale(0.8)">
+          <div style="transform: scale(0.8);">
             <app-button
               type="round flat"
               bgcolor="transparent"
@@ -303,7 +328,13 @@
       <ng-template let-item>
         <div class="list-item">
           <div
-            style="display: flex; flex-direction: row;justify-content: space-between;width: 100%; padding: 5px;"
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              width: 100%;
+              padding: 5px;
+            "
           >
             <span>
               <b>
@@ -321,7 +352,12 @@
     <div class="v-space"></div>
     <div class="v-space"></div>
     <div
-      style="width: 100%; display: flex; justify-content: center; align-items: center;"
+      style="
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
     >
       <app-button
         *ngIf="activeProject.id"
@@ -333,7 +369,7 @@
   </ng-template>
 
   <ng-template #addLayout>
-    <div style="width: 60%;">
+    <div style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="newProject.name"
         (changeText)="onTextChanged($event, 'project')"
@@ -361,7 +397,7 @@
   </ng-template>
 
   <ng-template #addDepartment>
-    <div style="width: 60%;">
+    <div style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="deptAlias"
         placeholder="Department alias"
@@ -397,23 +433,28 @@
         ></app-input-field>
       </div>
       <div class="box-model">
-        <span style="position: relative; left: 90px"
+        <span style="position: relative; left: 90px;"
           >{{ modelDim.width }} m</span
         >
         <div [ngStyle]="{ 'background-color': selectedColor.color }">
           {{ modelDim.area }} m<sup>2</sup>
         </div>
-        <span style="position: relative; top: -60px; left: -40px;;"
+        <span style="position: relative; top: -60px; left: -40px;"
           >{{ modelDim.height }} m</span
         >
       </div>
     </div>
     <div class="v-space"></div>
     <span
-      style="font-size: 16px; font-weight: bold; margin-bottom: 15px; margin-left: 20px;"
+      style="
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        margin-left: 20px;
+      "
       >Select color:</span
     >
-    <div style="margin: 10px"></div>
+    <div style="margin: 10px;"></div>
     <div class="color-picker">
       <button
         (click)="onSelectColor(itemColor)"
@@ -428,7 +469,7 @@
   </ng-template>
 
   <ng-template #addInputConfig>
-    <div style="width: 60%;">
+    <div style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="inputAlias"
         placeholder="Weight Input alias"
@@ -483,7 +524,7 @@
   </ng-template>
 
   <ng-template #editInputConfig>
-    <div style="width: 60%;">
+    <div style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="editSelectedRelationship.name"
         placeholder="Relationship alias/name"
@@ -541,7 +582,7 @@
   </ng-template>
 
   <ng-template #register>
-    <div style="width: 70%">
+    <div style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="auth.username"
         [type]="'text'"
@@ -581,7 +622,7 @@
   </ng-template>
 
   <ng-template #login>
-    <div *ngIf="!currentUser.email" style="width: 70%">
+    <div *ngIf="!currentUser.email" style="width: 90%; padding-top: 10px;">
       <app-input-field
         [text]="signIn.email"
         [type]="'text'"
@@ -620,7 +661,14 @@
   <ng-template #alert>
     <span></span>
     <div
-      style="width: 100%; display: flex; flex-direction: row;justify-content: space-between; padding-left: 20px; padding-right: 20ppx;"
+      style="
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 20px;
+        padding-right: 20ppx;
+      "
     >
       <app-button>No</app-button>
       <app-button>Yes</app-button>
@@ -630,7 +678,29 @@
   <app-splash
     [shouldShow]="showSplash"
     [slashText]="'Fetching data please wait ...'"
-  ></app-splash>
+  >
+  </app-splash>
+  <app-modal
+    [headerText]="'Documentation (flayde)'"
+    [isFill]="true"
+    [allowBackLayClick]="true"
+    [isLoading]="false"
+    #docsModal
+  >
+    <div class="close-btn">
+      <app-button
+        type="flat"
+        bgcolor="transparent"
+        color="#a80044"
+        (clicked)="docsModal.toggleModal()"
+      >
+        <i class="fas fa-times"></i>
+      </app-button>
+    </div>
+    <div class="content">
+      <app-help-screen></app-help-screen>
+    </div>
+  </app-modal>
 
   <app-modal
     [headerText]="modalHeaderTitle"
@@ -674,7 +744,12 @@
         </ng-container>
         <ng-container *ngSwitchDefault>
           <div
-            style="display:flex; justify-content:center; align-items:center; width: 100%; "
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+            "
           >
             no content here
           </div>
@@ -719,15 +794,15 @@
       <div align="left">
         <span><b>Sign Up</b></span>
         <br />
-        <span style="margin-top: 30px">
+        <span style="margin-top: 30px;">
           Unable to save project because you are yet sign in. You can
           <i><b>sign in or up</b></i> in order to save and initate project
           optimization</span
         >
         <br /><br />
-        <div style="display:flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: row;">
           <app-button type="rounded" color="'white'" (clicked)="showLogin()">
-            <span style="font-size: 13px">sign in</span>
+            <span style="font-size: 13px;">sign in</span>
           </app-button>
           <div>&nbsp;&nbsp;&nbsp;</div>
           <app-button
@@ -736,7 +811,7 @@
             [bgcolor]="'white'"
             color="red"
           >
-            <span style="font-size: 13px">sign up</span>
+            <span style="font-size: 13px;">sign up</span>
           </app-button>
         </div>
       </div>
@@ -748,7 +823,7 @@
     (statusClicked)="statusClicked()"
     [user]="currentUser.email ? currentUser.email[0].toUpperCase() : ''"
   >
-    <div style="width: 100%; height: 100%" class="center">
+    <div style="width: 100%; height: 100%;" class="center">
       <ng-container *ngTemplateOutlet="centerContent"></ng-container>
     </div>
     <div class="left" style="width: 100%;">

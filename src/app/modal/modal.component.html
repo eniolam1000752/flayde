@@ -1,8 +1,10 @@
 <div class="modal">
   <div [ngClass]="modalClass" (click)="onclicked($event)">
-    <div class="modal-content" (click)="contentClick($event)">
-      <!-- <form (ngSubmit)="onSubmit()" #form="ngForm"> -->
-      <div style="overflow: hidden;position: relative;">
+    <div
+      [ngClass]="{ 'modal-content': true, fill: isFill }"
+      (click)="contentClick($event)"
+    >
+      <div style="position: relative;">
         <div class="loader-bar" *ngIf="isLoading">
           <div class="loader"></div>
         </div>
@@ -11,12 +13,12 @@
           ><ng-content select='div[class="close-btn"]'></ng-content>
         </div>
       </div>
-
-      <ng-content select='div[class="content"]'></ng-content>
+      <div class="contnetWrapper">
+        <ng-content select='div[class="content"]'></ng-content>
+      </div>
       <div class="modal-footer">
         <ng-content select='div[class="footer"]'></ng-content>
       </div>
-      <!-- </form> -->
     </div>
   </div>
 </div>

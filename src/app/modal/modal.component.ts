@@ -4,7 +4,7 @@ import {
   Output,
   Input,
   EventEmitter,
-  OnChanges
+  OnChanges,
 } from "@angular/core";
 
 interface ModalEvent {
@@ -15,7 +15,7 @@ interface ModalEvent {
 @Component({
   selector: "app-modal",
   templateUrl: "./modal.component.html",
-  styleUrls: ["./modal.component.scss"]
+  styleUrls: ["./modal.component.scss"],
 })
 export class ModalComponent implements OnInit, OnChanges {
   @Output()
@@ -29,6 +29,8 @@ export class ModalComponent implements OnInit, OnChanges {
   public headerText = "-- empty --";
   @Input("isLoading")
   public isLoading = false;
+  @Input()
+  public isFill = false;
 
   public modalClass = { "modal-back-lay": true, hide: true };
 

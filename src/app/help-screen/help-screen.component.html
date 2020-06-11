@@ -1,0 +1,1604 @@
+<div style="padding-left: 20px; padding-right: 20px; margin-top: 40px;">
+  <p>
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="4" style="font-size: 16pt;"
+          ><b>CHAPTER FOUR</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="4" style="font-size: 14pt;"
+          ><b>SOFTWARE DESIGN, ANALYSIS AND EVALUATION</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >In this chapter we represent a computer implementation system called
+        </font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><u>F</u></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;">acility </font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><u>Lay</u></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;">out </font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><u>D</u></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;">esign and </font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><u>E</u></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >valuation (FlayDE), which is developed to enable the user solve the
+          equal-area FLP, using the traditional layout methodology described in
+          chapter three. The fully coded version of the algorithm is available
+          upon request. The system also produces an effectiveness value of the
+          displayed layout. The system was designed and built with JAVA
+          Script.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The system is Object Oriented; its functionality is based on the
+          object structure, which consists of main functional objects
+          accompanied by useful supporting objects. The system is events-driven:
+          the objects mostly communicate among themselves as well as the
+          Graphical User Interface GUI elements (user control); thus by raising
+          and watching for certain events. Objects and their structure are
+          explained in detail in
+        </font></font
+      ></font
+    ><font face="Arial, serif"
+      ><font size="3" style="font-size: 12pt;">section 4.5.</font></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >User can communicate with the system through a GUI. It is a
+          multi-window interface consisting of three main windows and one
+          supporting window. These windows have their own functional purpose and
+          elements. Most of the elements are user controls: controls designed to
+          fit the exact problem or deliver the exact functionality. That
+          enhances the usability of the GUI, and accompanied with appliance of
+          error management using error handling routines, makes the system more
+          stable and robust. The GUI is explained in detail in
+        </font></font
+      ></font
+    ><font face="Arial, serif"
+      ><font size="3" style="font-size: 12pt;">Chapter 4.6.</font></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >This application is an on-line integrated in the system, this makes
+          the application accessible &ldquo;on the move&rdquo; it can be easily
+          accessed anywhere with computers and mobile devices. This app can
+          provide useful information to the user about the system and how to use
+          it. Alongside this, there is also a table of codes and there
+          corresponding values imbedded in the system to aid the conversion of
+          relationship codes to their values to derive an result.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><b>4.1</b></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"> </font></font></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>SOFTWARE AND HARDWARE REQUIREMENT</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >In order to run and use FlayDE, certain minimum requirements of
+          hardware, software and memory must be met. These requirements are
+          listed below:</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><i><u>Hardware</u></i></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >FlayDE requires the following hardware:</font
+        ></font
+      ></font
+    >
+  </p>
+  <ul>
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >IBM PC compatible with Pentium class processor or later
+              model</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >Hard disk drive with a minimum of 120Mb of free space, and</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >At least 32Mb of RAM memory</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+  </ul>
+
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><i><u>Software</u></i></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >FlayDE requires the following software:</font
+        ></font
+      ></font
+    >
+  </p>
+  <ul>
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >MS Windows 98/2000 SP4/CE/Millennium Edition/Server 2000/XP
+              Mediacentre Edition/XP Professional x64 Edition/XP SP2 or later
+              operating system.</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >.NET Framework 2.0 or later.</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+  </ul>
+
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.2 INSTALLING FlayDE</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The FlayDE is an online application along with other supporting
+          application and documentation. The following steps describe how to
+          install FlayDE on any windows Operating System which meets the minimum
+          software and hardware requirement:</font
+        ></font
+      ></font
+    >
+  </p>
+  <ul>
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >Internet connection</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >Enter the FlayDe URL</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >Once the site opens, enter username and password</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+
+    <li>
+      <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              >The home page opens on the GUI and the user can start the
+              optimization processes.</font
+            ></font
+          ></font
+        >
+      </p>
+    </li>
+  </ul>
+
+  <p
+    align="justify"
+    style="margin-left: 0.5in; margin-bottom: 0in; line-height: 200%;"
+  >
+    <br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.3 DATA ORGANIZATION AND MANAGEMENT</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >Data is organized in three groups:
+        </font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>definition data, relationships data and result data.</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The definition and relationships data for each layout problem are
+          stored in one plain text file. The first part of the file contains
+          general data of the problem such as name, source and some comments
+          attributable to the facility. It also holds data such as the number of
+          departments to be contained in the facility. The second part contains
+          data of the department. This data includes the name, color coding, and
+          area of the departments.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The third part of the file holds the departmental flow information of
+          the facility.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The fourth part of the file is created when the layout is executed.
+          It represents the result data which consist of the optimization data
+          and layout summary data. The optimization data is made up of the nodal
+          diagram, plant layout diagram, and cost effectiveness of the optimized
+          layout that was produced.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >FlayDE manages these categories of data separately so that small
+          changes in one category do not affect the others, ones the user logs
+          in; every work done by the user is saved on his profile. This allows
+          the testing of several layout configurations without having to input
+          all the information each time. Users enter this information directly
+          into the system using textboxes, which also applies for inputs in the
+          subsystem - each one dedicated to a specific category and for as long
+          the user uses the application, past works can be recalled and
+          readjusted if need be to suit a new work or creating a new work if
+          need be.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.4 IMPLEMENTATION OF THE ALGORITHM</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The layout algorithm described in Chapter Four of this report is
+          implemented in a single class (JAVA Script) called ClassMain. This
+          class implements the algorithm using a number of functions which are
+          designed to return precise information in specific object types.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The system uses the algorithm implementation class by calling two
+          class procedures (subroutine), which acts as the class entry points.
+          The parameter passed is a reference to the problem object, where the
+          results are stored and returned to the system.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >Classes are an important part of objected-oriented programming
+          because they allow you to group related items as a unit, as well as
+          control their visibility and accessibility to other procedures.
+          Classes can also inherit and reuse code defined in other
+          classes.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The advantage of the class implementation lies in the possibility of
+          using the DLL (Dynamic Link Library) technology. With a little system
+          redesign the implementation can be advanced upon and compiled into
+          DLL. This would enable testing, analyzing, and using advanced
+          implementations without needing to apply any changes to the FlayDE
+          system.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.5 OBJECT STRUCTURE</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>MAIN OBJECTS</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >A group of main objects are used to handle the facility layout
+          problem, from problem definition to the results given by the system.
+          Classes representing those objects are: frmLayD, frmRelationships,
+          frmOptimization, and diaNameDepartments.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The frmLayD class is a parent class for frmRelationships and
+          frmOptimization classes, and represents a single problem on a higher
+          level. It consists of methods that support operations like creating
+          new problem object structure and its initiation methods for working
+          with reading and writing data from files as well as methods that cause
+          different ways of displaying a problem. The class through its
+          properties holds information about a problem object structure, by
+          maintaining references to child object structure, by maintaining
+          references to child objects, and links to user interface, by
+          maintaining references to user controls that handle different ways of
+          displaying a problem data. Its methods also support operations like
+          reading and writing data to file as well definition data editing with
+          data validation.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The frmRelationships class is a child of the frmLayD class. It
+          handles departmental flow data in details. Its methods support an
+          operation that displays the objects available to users for input only
+          as required, and controls the labeling of the facility layout. This
+          class is very dynamic and contains error handling procedures.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The frmOptimization class is also a child of the frmLayD class. It
+          has two instances, for each type of layout display produced by the
+          algorithm. It handles problem result data in detail through methods
+          that support different display operations for the resulting part
+          data.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The diaNameDepartments is a supporting class of frmLayD class. It
+          handles departments name and color data through methods that support
+          read/write operations as well as different display operations for the
+          output as well as the user interface.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.6 USER INTERFACE</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The FlayDE User Interface is a Multi-Document Interface using an MDI
+          Form (the Main Window) as a container for two functional windows: the
+          Relationships Window and the Optimization Window, as can be seen in
+          figure 4.2.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >All the features, mentioned in the following text, are explained in
+          detail in the FlayDE on-line help file.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_82edf7493f2fd105.gif"
+      align="left"
+      hspace="12"
+    />
+    <span
+      id="Frame1"
+      dir="ltr"
+      style="
+        float: left;
+        width: 1.34in;
+        height: 0.21in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p align="center" style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font size="1" style="font-size: 7pt;">BACKGROUND CHANGE</font></font
+        >
+      </p> </span
+    ><img
+      src="ABOUT_FLayDe_html_f3e84cde24cfcaab.png"
+      name="Picture 4"
+      align="bottom"
+      hspace="1"
+      width="309"
+      height="122"
+      border="0"
+    />
+    <img
+      src="ABOUT_FLayDe_html_c59d0f9c6a63082f.png"
+      name="Picture 7"
+      align="bottom"
+      hspace="1"
+      width="275"
+      height="122"
+      border="0"
+    />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_9248aaf9ce0187d1.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame2"
+      dir="ltr"
+      style="
+        float: left;
+        width: 2.6in;
+        height: 0.35in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p align="center" style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.1: SIGN IN TASK BAR</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_6e323ed23366a1c8.png"
+      name="Picture 1"
+      align="bottom"
+      width="624"
+      height="325"
+      border="0"
+    />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_9248aaf9ce0187d1.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame3"
+      dir="ltr"
+      style="
+        float: left;
+        width: 2.6in;
+        height: 0.35in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.2: FLayDE</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.6.1 THE MAIN WINDOW</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The purpose of the main window is to help the user work with a single
+          problem and its details more easily.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Main Window consists, as shown in Figure 4.2, five main elements:
+          the main menu, two panels, and two child windows.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="center" style="margin-bottom: 0in; line-height: 200%;">
+    <a name="_GoBack"></a>
+    <img
+      src="ABOUT_FLayDe_html_37cc49eddf1b0359.png"
+      name="Picture 2"
+      align="bottom"
+      vspace="1"
+      width="286"
+      height="587"
+      border="0"
+    />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_dcd210c72c5f5321.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame4"
+      dir="ltr"
+      style="
+        float: left;
+        width: 3.55in;
+        height: 0.35in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.3: FlayDE Main Window</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The main menu helps execute tasks, such as saving and printing
+          problems, and executing, profile name and resetting the various child
+          display style. It also contains the help menu and a means for exiting
+          the program.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The problem general variables area is located immediately under the
+          Main Menu. It consists of six general variables, defining the FLP: the
+          name of facility, two comment variables (the source of the problem and
+          a general comment the user can give to the problem), area of the
+          departments, number of departments, and a link to a dialog where the
+          name of the departments (see Figure 4.4) as well as a user chosen
+          color. The color selection is made possible by the color dialog
+          provided for each department (see Figure 4.4).</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="center" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_e3b70084431d0617.png"
+      name="Picture 3"
+      align="bottom"
+      width="532"
+      height="480"
+      border="0"
+    />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_49d69326cba36c16.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame5"
+      dir="ltr"
+      style="
+        float: left;
+        width: 3.47in;
+        height: 0.32in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.4: Name Departments Dialog</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.6.2 THE RELATIONSHIP WINDOW</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Relationships Window is a highly dynamic child window in the MDI
+          system of FlayDE. It consists of three (beside a standard window bar
+          with the name of currently opened problem) elements and controls: the
+          Chart, the Conversion Aid, and the Show Department Name Checkbox.
+          (Figure 4.5)</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="center" style="margin-bottom: 0in; line-height: 200%;">
+    <img src="ABOUT_FLayDe_html_9d397a592a3576aa.gif" align="bottom" />
+    <img src="ABOUT_FLayDe_html_9b7d7284bdeedf5a.gif" align="bottom" />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_c8615626d5d2d536.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame6"
+      dir="ltr"
+      style="
+        float: left;
+        width: 3.26in;
+        height: 0.36in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.5: Relationships Window</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Chart (as in Figure 4.5) is the major element of the
+          Relationships Window. It provides a 2-Dimensional array of textboxes
+          where users can input departmental relationships for up to twenty
+          departments. This array can be reduced, based on users&rsquo; input of
+          the number of departments that is required for the FLP, thus providing
+          a dynamic chart system. The chart only accepts values of relationships
+          and not the code, and it has an error handling system to ensure users
+          input valid values. Based on this error handling system, each time a
+          textbox loses focus, the system checks that the variable entered
+          IsNumeric and falls within the range of values (i.e. between 4 and
+          -1), and is not a letter or IsNothing (i.e. empty). If the validation
+          process returns correct, users can proceed to the next textbox, else
+          the textbox would refuse to lose focus. The validation process serves
+          to check for system crashes.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Conversion Aid has no system functionality except to aid the user
+          in the conversion of the Rel-Chart to the Value Chart. It is a
+          repetition of that
+        </font></font
+      ></font
+    ><font color="#c00000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>shown in Table 3.1.</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The decision to show the name of the department in the layout or just
+          a reference number corresponding to the department is made by the
+          class ClassMain each time the &ldquo;Optimize&rdquo; button is
+          clicked. It uses the &ldquo;Show Department Name&rdquo; checkbox
+          immediately above the Optimize button. The ClassMain evaluates if the
+          Show Department Name checkbox is checked. If it is, the name of
+          departments entered in the Name Departments Window is displayed in
+          there corresponding modules, else the reference numbers are
+          used.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <br />
+    <br />
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.6.3 THE OPTIMIZATION WINDOW</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Optimization Window serves as an output element which displays
+          the layout as well as has some visual-aid functionality.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >It consists of three elements and control: the Nodal Diagram, the
+          Plant Layout, and some visual-aid buttons. Figure 4.6</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="center"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <img
+      src="ABOUT_FLayDe_html_7c6f71eb40000662.gif"
+      align="left"
+      hspace="12"
+    />
+    <img
+      src="ABOUT_FLayDe_html_7601fdeab37dbd16.gif"
+      align="left"
+      hspace="12"
+    />
+    <span
+      id="Frame7"
+      dir="ltr"
+      style="
+        float: left;
+        width: 1.39in;
+        height: 0.29in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p align="center" style="margin-bottom: 0.14in;">
+        <font color="#000000"><b>OPTIMIZATION</b></font>
+      </p>
+      <p style="margin-bottom: 0.14in;">
+        <br />
+        <br />
+      </p>
+    </span>
+    <span
+      id="Frame8"
+      dir="ltr"
+      style="
+        float: left;
+        width: 0.85in;
+        height: 0.29in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p align="center" style="margin-bottom: 0.14in;">
+        <font color="#000000"><b>NODAL</b></font>
+      </p> </span
+    ><img
+      src="ABOUT_FLayDe_html_f15a352ea5a17b6d.png"
+      name="Picture 9"
+      align="bottom"
+      hspace="1"
+      width="278"
+      height="357"
+      border="0"
+    />
+    <img
+      src="ABOUT_FLayDe_html_cdd1247b6c6a4dbe.png"
+      name="Picture 10"
+      align="bottom"
+      width="270"
+      height="358"
+      border="0"
+    />
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <img
+      src="ABOUT_FLayDe_html_c6229ff938ed2175.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame9"
+      dir="ltr"
+      style="
+        float: left;
+        width: 3.24in;
+        height: 0.42in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.6: Optimization Window</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><br />
+    <br />
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Nodal Diagram and the Plant Layout elements are contained in the
+          TabOptimization TabControl (TabControls are explained in section
+          4.6.4). The Nodal Diagram displays (as the name implies) the nodal
+          diagram of the layout while the Plant Layout displays the Plant layout
+          of the FLP. These displays combine to give the user an elaborate idea
+          of the position of the various departments in the facility.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >On the right corner of the Optimization Window consist of three
+          buttons which constitute the visual-aid. The &ldquo;ZOOM+&rdquo;
+          button enlarges the display of the TabControl that has focus 25
+          percent on each click. The &ldquo;ZOOM-&rdquo;button reduces the
+          display on the TabControl that has focus 25 percent on each click. The
+          &ldquo;RESTORE&rdquo; button, as the name implies, restores the
+          display to its original dimension.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <br />
+    <br />
+  </p>
+  <p
+    align="justify"
+    style="margin-top: 0.17in; margin-bottom: 0.14in; line-height: 200%;"
+  >
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7 ClassMain</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The ClassMain is the main class, and is responsible for the
+          implementation of the algorithm described in Chapter Three.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >It exposes a number of methods, namely
+          &ldquo;DepartmentalScripts&rdquo;, &ldquo;DepartmentalSequence,
+          &ldquo;DepartmentColor&rdquo;,
+          &ldquo;HorDepartmentalRelationships&rdquo;, &ldquo;Points&rdquo;,
+          &ldquo;RelationshipSorts&rdquo;,
+          &ldquo;VetDepartmentalRelationships&rdquo;, &ldquo;Main&rdquo;, and
+          &ldquo;NodalMain&rdquo;. These methods combine to make the last two
+          functional and would be described in the preceding texts. The Main and
+          NodalMain methods are the entry point of the ClassMain.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.1. DepartmentalScripts()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The DepartmentalScripts is a Function that if passed the
+          department&rsquo;s reference number (using the calling code) would
+          return the Name of department. Details of these are contained in the
+          fully coded version of the algorithm which is available upon
+          request.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.2. DepartmentalSequence()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The DepartmentalSequence is a Function that accepts the sequence of
+          entry number or element (using the calling code) takes the sum of the
+          horizontal relationships as well as the vertical relationships (as in
+          the chart in the Relationships Window) to get a total sum for each
+          department. The departments are then sorted according to the total
+          sum, in descending order, and inserted into an array. Whenever
+          DepartmentalSequence is called it returns the department sequentially,
+          as they are in the array. Details of these are contained in the fully
+          coded version of the algorithm which is available upon request.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.3. DepartmentColor()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The DepartmentColor is a Function that if passed the
+          department&rsquo;s reference number (using the calling code) would
+          return the color of department as inputted by the user in the
+          &ldquo;Name Departments&rdquo; Window.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.4. HorDepartmentalRelationships()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >This is a Function that returns all the departments having the
+          required horizontal relationship (4, 3, 2, and 1) with the specified
+          department. It takes in the specified department as well as the
+          required relationship as parameters in other to achieve its
+          functionality.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><b>4.7.5.</b></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"> </font></font></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><b>Points()</b></font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The Points is a Function that returns an array of points holding the
+          coordinates of the candidacy location of the next departments to be
+          placed. It accepts the coordinates of the placed departments when it
+          is called. It is this Function that affects the shape of the facility
+          displayed in the Optimization window.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.6. VetDepartmentalRelationships()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >This is a Function that returns all the departments having the
+          required vertical relationship (4, 3, 2, and 1) with the specified
+          department. It takes in the specified department as well as the
+          required relationship as parameters in other to achieve its
+          functionality.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"><b>4.7.7.</b></font></font
+      ></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"> </font></font></font
+    ><font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>RelationshipSorts()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >This Function is similar to the HorDepartmentalRelationships and the
+          VetDepartmentalRelationships Functions described in section 4.7.6 and
+          4.7.4 respectively. The difference being that the RelationshipSorts
+          checks for both vertical and horizontal relationships in on call. It
+          first checks for horizontal relationship of 4, if it does not find
+          any, then it checks for vertical relationship of 4. If it does not
+          find any, it checks for 3 relationships, if it does not find any -it
+          continues until it finds- to relationship -1. After carrying out the
+          above process and finding any horizontal or vertical relationships at
+          some stage, it returns an array holding all the departments with this
+          relationship.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          ><b>4.7.8. Main()</b></font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The &ldquo;Main&rdquo; is a very important procedure (subroutine)
+          since it is the entry point to the class ClassMain which implements
+          the algorithm described in Chapter Three. It also links all the
+          Functions described above, to carry out its own functionality. The
+          flow chart of the algorithm is shown in Figure 4.6.
+        </font></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The procedure starts by trying to place the first department in the
+          centre of the Plant Layout. It does this by calling the
+          DepartmentalSequence Function (described in section 4.7.2, and passing
+          1 as argument) which returns the department with the highest
+          relationship; next, it gets the color of the first department by
+          calling the DepartmentColor function (described in section 4.7.3, and
+          passing the value returned after calling DepartmentalSequence as
+          argument) which returns the color of the first department; the
+          centroid of the Plant Layout is then calculated and used as the
+          coordinated of the first department.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >Next, the HorDepartmentalRelationships Function is then called to
+          ascertain if the first department has any four-relationships. If it
+          does these departments are placed about the first department with the
+          help of the Points Function. The Points Function is called passing the
+          coordinates of the first department as argument. The coordinate points
+          returned (section 4.7.5) are checked alternatively to determine if
+          they are occupied. If they are the next coordinate point is checked,
+          and so on, until a free location is discovered.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <img
+      src="ABOUT_FLayDe_html_b1b45a8c22ac4a1.gif"
+      align="left"
+      hspace="13"
+      vspace="1"
+    />
+    <span
+      id="Frame10"
+      dir="ltr"
+      style="
+        float: left;
+        width: 3.59in;
+        height: 0.37in;
+        border: none;
+        padding: 0in;
+        background: #ffffff;
+      "
+      ><p style="margin-bottom: 0.14in;">
+        <font color="#000000"
+          ><font face="Arial, serif"
+            ><font size="3" style="font-size: 12pt;"
+              ><b>Fig 4.6: Main Flow Chart</b></font
+            ></font
+          ></font
+        >
+      </p> </span
+    ><img src="ABOUT_FLayDe_html_8c7715806b37c3c1.gif" align="bottom" />
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >The DepartmentalSequence (this time passing two) is called again to
+          get the &ldquo;next department&rdquo; that has the highest
+          relationships. If this department has not been placed, the
+          &ldquo;Main&rdquo;, calls RelationshipSorts (section 4.7.7) passing
+          &ldquo;next department&rdquo; as argument. The RelationshipSorts
+          returns the departments with the appropriate relationship, and the
+          &ldquo;next department&rdquo; is placed next to these departments
+          (those that have been placed) calling DepartmentColor and
+          Points.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;">
+    <font color="#000000"
+      ><font face="Arial, serif"
+        ><font size="3" style="font-size: 12pt;"
+          >If &ldquo;next department&rdquo; have been placed, the
+          &ldquo;Main&rdquo;, calls HorDepartmentalRelationships, passing
+          &ldquo;next department&rdquo;, to get an array of the departments
+          having four-relationship with it. This is then placed about the
+          &ldquo;next department&rdquo;, each time calling DepartmentColor and
+          Points. Details of these are contained in the fully coded version of
+          the algorithm which is available upon request.</font
+        ></font
+      ></font
+    >
+  </p>
+  <p align="justify" style="margin-bottom: 0in; line-height: 200%;"><br /></p>
+  <!-- <span>
+    <h4>SOFTWARE DESIGN, ANALYSIS AND EVALUATION</h4>
+  </span>
+  <span style="text-align: justify;">
+    In this chapter we represent a computer implementation system called
+    Facility Layout Design and Evaluation (FlayDE), which is developed to enable
+    the user solve the equal- area FLP, using the traditional layout methodology
+    described in chapter three. The fully coded version of the algorithm is
+    available upon request. The system also produces an effectiveness value of
+    the displayed layout. The system was designed and built with JAVA Script.
+    <br />
+    <br />
+    The system is Object Oriented; its functionality is based on the object
+    structure, which consists of main functional objects accompanied by useful
+    supporting objects. The system is events-driven: the objects mostly
+    communicate among themselves as well as the Graphical User Interface GUI
+    elements (user control); thus by raising and watching for certain events.
+    Objects and their structure are explained in detail in section 4.5. User can
+    communicate with the system through a GUI. It is a multi-window interface
+    consisting of three main windows and one supporting window. These windows
+    have their own functional purpose and elements. Most of the elements are
+    user controls: controls designed to fit the exact problem or deliver the
+    exact functionality. That enhances the usability of the GUI, and accompanied
+    with appliance of error management using error handling routines, makes the
+    system more stable and robust. The GUI is explained in detail in Chapter
+    4.6. This application is an on-line integrated in the system, this makes the
+    application accessible “on the move” it can be easily accessed anywhere with
+    computers and mobile devices. This app can provide useful information to the
+    user about the system and how to use it. Alongside this, there is also a
+    table of codes and there corresponding values imbedded in the system to aid
+    the conversion of relationship codes to their values to derive an result.
+  </span>
+  <span>
+    <h4>SOFTWARE AND HARDWARE REQUIREMENT</h4>
+  </span>
+  <span
+    >In order to run and use FlayDE, certain minimum requirements of hardware,
+    software and memory must be met. These requirements are listed below:<br /><br />
+    <b>
+      <h5>
+        <i><u>HardWare</u></i>
+      </h5>
+    </b>
+    FlayDE requires the following hardware:<br />
+    <ul>
+      <li>
+        IBM PC compatible with Pentium class processor or later model
+      </li>
+      <li>
+        Hard disk drive with a minimum of 120Mb of free space, and
+      </li>
+      <li>
+        At least 32Mb of RAM memory
+      </li>
+    </ul>
+    <b>
+      <h5>
+        <i><u>Software</u></i>
+      </h5>
+    </b>
+    FlayDE requires the following software:<br />
+    <ul>
+      <li>
+        MS Windows 98/2000 SP4/CE/Millennium Edition/Server 2000/XP Mediacentre
+        Edition/XP Professional x64 Edition/XP SP2 or later operating system.
+      </li>
+      <li>
+        .NET Framework 2.0 or later. 4.2 INSTALLING FlayDE The FlayDE is an
+        online application along with other supporting application and
+        documentation.
+      </li>
+    </ul>
+  </span>
+  <span>
+    <h4>
+      INSTALLING FlayDE
+    </h4>
+  </span>
+  <span
+    >The FlayDE is an online application along with other supporting application
+    and documentation. The following steps describe how to install FlayDE on any
+    windows Operating System which meets the minimum software and hardware
+    requirement:
+    <ul>
+      <li>
+        Internet connection
+      </li>
+      <li>
+        Enter the FlayDe URL
+      </li>
+      <li>Once the site opens, enter username and password</li>
+      <li>
+        The home page opens on the GUI and the user can start the optimization
+        process
+      </li>
+    </ul>
+  </span> -->
+</div>

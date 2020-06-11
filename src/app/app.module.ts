@@ -19,6 +19,7 @@ import { ModalComponent } from './modal/modal.component';
 import { RendrerComponent } from './rendrer/rendrer.component';
 import { TopToastComponent } from './top-toast/top-toast.component';
 import { SplashComponent } from './splash/splash.component';
+import { HelpScreenComponent } from './help-screen/help-screen.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SplashComponent } from './splash/splash.component';
     ModalComponent,
     RendrerComponent,
     TopToastComponent,
-    SplashComponent
+    SplashComponent,
+    HelpScreenComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TestServiceService],

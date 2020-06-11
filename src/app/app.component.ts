@@ -1,21 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  AfterViewChecked,
-  QueryList,
-  DoCheck,
-  ContentChild,
-  AfterContentInit,
-  AfterContentChecked,
-  OnChanges,
-  Predicate,
-  Input
-} from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { TestServiceService } from "./test-service.service";
 import { ModalComponent } from "./modal/modal.component";
-import { ButtonComponent } from "./button/button.component";
 import { LayoutComponent } from "./layout/layout.component";
 import {
   Project,
@@ -23,7 +8,7 @@ import {
   Department,
   MatrixData,
   LayoutMatrix,
-  Result
+  Result,
 } from "./Interfaces";
 import { ToastComponent } from "./toast/toast.component";
 import { Optimization } from "./optimization";
@@ -47,7 +32,7 @@ interface DimObj {
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild("layout", { static: false })
@@ -64,6 +49,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild("renderer", { static: false })
   public renderer: RendrerComponent;
+
+  @ViewChild("docsModal", { static: false })
+  public docsModal: ModalComponent;
 
   public collapsableClass = { collapsable: true, "no-collapse": true };
   public modalContent = "";
@@ -83,12 +71,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     { color: "#555", id: 11 },
     { color: "#cba", id: 12 },
     { color: "#e08", id: 13 },
-    { color: "#092", id: 14 }
+    { color: "#092", id: 14 },
   ];
   public bgColors: ThemeObj[] = [
     { color: "#ffd", id: 0, theme: "default" },
     { color: "#999", id: 1, theme: "1" },
-    { color: "#676767", id: 2, theme: "2" }
+    { color: "#676767", id: 2, theme: "2" },
   ];
   public legend = [
     { code: "A", value: 4, priority: "Aboslutely Necessary" },
@@ -96,7 +84,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     { code: "I", value: 2, priority: "Important" },
     { code: "O", value: 1, priority: "Oridinary" },
     { code: "U", value: 0, priority: "Unimportant" },
-    { code: "X", value: -1, priority: "Undesirable" }
+    { code: "X", value: -1, priority: "Undesirable" },
   ];
 
   public selectedColor: ColorObj = this.colorList[0];
@@ -110,33 +98,33 @@ export class AppComponent implements OnInit, AfterViewInit {
     "Product Layout",
     "Combination layout",
     "Fixed position Layout",
-    "Group Layout"
+    "Group Layout",
   ] as string[];
 
   public newProject: Project = {
     name: "",
-    layoutType: this.projectTypes[0]
+    layoutType: this.projectTypes[0],
   } as Project;
   public projects: Project[] = [];
   public indexedProjects: any = {};
   public opendProjects: Project[] = [];
-  public newProjectInputFieldMsg: string = "";
-  public newDeptInputFieldMsg: string = "";
-  public newRelationshipInputFieldMsg: string = "";
+  public newProjectInputFieldMsg = "";
+  public newDeptInputFieldMsg = "";
+  public newRelationshipInputFieldMsg = "";
   public activeProject: Project = { name: "" } as Project;
 
-  public deptAlias: string = "";
-  public inputAlias: string = "";
-  public toastMessage: string = "";
-  public isLoading: boolean = false;
-  public showSplash: boolean = true;
-  public showDeleteProject: boolean = false;
+  public deptAlias = "";
+  public inputAlias = "";
+  public toastMessage = "";
+  public isLoading = false;
+  public showSplash = true;
+  public showDeleteProject = false;
   public weightCollapsed = true;
 
   public editSelectedRelationship: InputConfig = {} as InputConfig;
   public selectedProjectId = "";
   public resultData: LayoutMatrix;
-  public isGenResult: boolean = true;
+  public isGenResult = true;
   public auth = { email: "", password: "", cpassword: "", username: "" };
   public signIn = { email: "", password: "" };
   public regMsg = "";
@@ -154,13 +142,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.weightCollapsed = false;
-    window.addEventListener("keydown", event => {
+    window.addEventListener("keydown", (event) => {
       if (event.ctrlKey && event.key === "s") {
         event.preventDefault();
         if (!this.currentUser.email) {
           this.topToast.showToast();
         } else {
-          if (!this.activeProject.id) return 0;
+          if (!this.activeProject.id) {
+            return 0;
+          }
           this.saveActions();
         }
       }
@@ -168,10 +158,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     setTimeout(() => (this.weightCollapsed = true), 2000);
-    const setShouldShowSplash = state => (this.showSplash = state);
-    this.globals.onAuthStateChanged().subscribe(user => {
-      if (user) this.initUserProject(user, setShouldShowSplash);
-      else this.uninitUserProject(setShouldShowSplash);
+    const setShouldShowSplash = (state) => (this.showSplash = state);
+    this.globals.onAuthStateChanged().subscribe((user) => {
+      if (user) {
+        this.initUserProject(user, setShouldShowSplash);
+      } else {
+        this.uninitUserProject(setShouldShowSplash);
+      }
     });
   }
 
@@ -181,15 +174,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (temp.result.result.length || temp.result.result.length === 0) {
       temp.result = {
         ...temp.result,
-        result: this.objectifyArray(temp.result.result)
+        result: this.objectifyArray(temp.result.result),
       };
     }
     this.globals.addProject(temp.id, temp).subscribe(
-      resp => {
+      (resp) => {
         this.toastMessage = "😁 No worries data has been saved";
         this.toastRef.showToast();
       },
-      err => {
+      (err) => {
         this.toastMessage = "😬 Unable to save data";
         this.toastRef.showToast();
       }
@@ -204,9 +197,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.activeProject = {} as Project;
     this.opendProjects = [];
     this.globals.getProject(this.currentUser.uid).subscribe(
-      collection => {
+      (collection) => {
         console.log("collection list of projects: ", collection);
-        collection.forEach(item => {
+        collection.forEach((item) => {
           const project: Project = item.data() as Project;
           project.result.result = Object.values(project.result.result);
           // console.log("doc items: ", item.data(), project);
@@ -215,10 +208,14 @@ export class AppComponent implements OnInit, AfterViewInit {
         });
         awaitFlag(false);
         this.collapseProjects();
-        if (this.projects[0]) this.activeProject = this.projects[0];
-        if (this.projects[0]) this.opendProjects.push(this.projects[0]);
+        if (this.projects[0]) {
+          this.activeProject = this.projects[0];
+        }
+        if (this.projects[0]) {
+          this.opendProjects.push(this.projects[0]);
+        }
       },
-      err => {
+      (err) => {
         console.log("error getting projects: ", err);
         awaitFlag(false);
       }
@@ -400,7 +397,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   setSelectedInputWeight(event, data) {
-    if (event) event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
 
     if (!(data.pos.i >= data.pos.j)) {
       this.selectedInputWeightObj = data;
@@ -410,16 +409,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   selectWeightValue(value, id, isEdit?) {
     if (!isEdit) {
-      this.weightMatrix.forEach(item => {
-        item.rowData.forEach(colItem => {
-          if (colItem.id === id) colItem.value = value;
+      this.weightMatrix.forEach((item) => {
+        item.rowData.forEach((colItem) => {
+          if (colItem.id === id) {
+            colItem.value = value;
+          }
         });
       });
       this.activeProject.activeInputConfig.matrix = this.weightMatrix;
     } else {
-      this.editSelectedRelationship.matrix.forEach(item => {
-        item.rowData.forEach(colItem => {
-          if (colItem.id === id) colItem.value = value;
+      this.editSelectedRelationship.matrix.forEach((item) => {
+        item.rowData.forEach((colItem) => {
+          if (colItem.id === id) {
+            colItem.value = value;
+          }
         });
       });
       this.activeProject.activeInputConfig = this.editSelectedRelationship;
@@ -451,7 +454,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         inputConfigs: [],
         activeInputConfig: {},
         description: "No description provided for this project.",
-        result: { result: [[]] } as Result
+        result: { result: [[]] } as Result,
       } as Project;
       const temp = Object.assign({}, projectClone);
       console.log(temp);
@@ -461,7 +464,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.isLoading = true;
       this.globals.addProject(projectClone.id, temp).subscribe(
-        resp => {
+        (resp) => {
           console.log("project added successfully: ", resp);
           this.projects.push(projectClone);
           this.indexedProjects[projectClone.id] = projectClone;
@@ -471,7 +474,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           this.toggleModal();
           this.newProjectInputFieldMsg = "";
         },
-        err => {
+        (err) => {
           this.isLoading = false;
           console.log("error adding project: ", err);
         }
@@ -486,7 +489,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   loadSelectedProject(selectedProject: Project) {
     console.log(selectedProject);
     this.selectProject(selectedProject, selectedProject.id);
-    for (let project of this.opendProjects) {
+    for (const project of this.opendProjects) {
       if (project.id === selectedProject.id) {
         return 0;
       }
@@ -501,10 +504,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         value: 0,
         pos: { i: rowIndex, j: colIndex },
         departmentId: col.id,
-        index: col.index.toString()
+        index: col.index.toString(),
       })),
       departmentId: row.id,
-      index: row.index.toString()
+      index: row.index.toString(),
     })) as MatrixData;
   }
 
@@ -513,7 +516,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   addDeptToProject(project: Project, id) {
-    let deptTemp: Department = {
+    const deptTemp: Department = {
       id: `dept-${(Math.random() + "").slice(2, 15)}`,
       name: this.deptAlias,
       color: { ...this.selectedColor }.color,
@@ -524,7 +527,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       top: "",
       bottom: "",
       position: { x: 0, y: 0 },
-      index: { ...this.activeProject }.departments.length + 1
+      index: { ...this.activeProject }.departments.length + 1,
     } as Department;
 
     try {
@@ -558,7 +561,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       const relationship: InputConfig = {
         id: `relationship-${(Math.random() + "").slice(2, 15)}`,
         name: this.inputAlias,
-        matrix: [...this.weightMatrix]
+        matrix: [...this.weightMatrix],
       } as InputConfig;
 
       this.indexedProjects[projectId].inputConfigs.push(relationship);
@@ -589,11 +592,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   logoutUser() {
     this.globals.logoutUser().subscribe(
-      resp => {
+      (resp) => {
         console.log("user logged out: ", resp);
         // this.toggleModal();
       },
-      err => {
+      (err) => {
         console.log("unable to logout user: ", err);
       }
     );
@@ -620,7 +623,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.signIn.password = "";
     }, 2000);
     this.globals.loginUser(this.signIn.email, this.signIn.password).subscribe(
-      resp => {
+      (resp) => {
         console.log("user: ", resp);
         // this.initUserProject(resp.user);
         this.allowModalDissmiss = true;
@@ -629,7 +632,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.toastRef.toggle();
         this.toggleModal();
       },
-      err => {
+      (err) => {
         console.log("not signed in: ", err);
         this.toastMessage = err.message;
         this.signInMsg = err.message;
@@ -661,10 +664,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.isLoading = true;
     this.globals.signUpUser(this.auth).subscribe(
-      resp => {
+      (resp) => {
         console.log(resp);
         this.globals.addUser(resp.user.uid, this.auth).subscribe(
-          fireStoreAdded => {
+          (fireStoreAdded) => {
             console.log("add to fire store: ", fireStoreAdded);
             this.toggleModal();
             this.topToast.hideToast();
@@ -675,13 +678,13 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.allowModalDissmiss = true;
             this.isLoading = false;
           },
-          fireStoreErr => {
+          (fireStoreErr) => {
             console.log("not added to firestore: ", fireStoreErr);
             this.isLoading = false;
           }
         );
       },
-      err => {
+      (err) => {
         console.log(err);
         this.toastMessage = err.message;
         this.regMsg = err.message;
@@ -714,16 +717,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   public deleteProject(project: Project) {
     this.globals.removeProject(project.id).subscribe(
-      resp => {
+      (resp) => {
         console.log("delete success: ", resp);
         delete this.indexedProjects[project.id];
         this.projects = Object.values(this.indexedProjects);
         this.opendProjects = this.opendProjects.filter(
-          item => item.id !== project.id
+          (item) => item.id !== project.id
         );
         this.activeProject = this.projects[0] || ({} as Project);
       },
-      err => {
+      (err) => {
         console.log("unable to delete project: ", err);
       }
     );
@@ -736,15 +739,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (temp.result.result.length || temp.result.result.length === 0) {
       temp.result = {
         ...temp.result,
-        result: this.objectifyArray(temp.result.result)
+        result: this.objectifyArray(temp.result.result),
       };
     }
     console.log("deleting department", temp);
     this.globals.addProject(temp.id, temp).subscribe(
-      resp => {
+      (/* resp */) => {
         console.log("data has been deleted");
       },
-      err => {
+      (/* err */) => {
         console.log("error deleting data");
       }
     );
@@ -755,8 +758,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.selectedTheme = theme;
   }
 
-  removeRelConfig(deptId) {
-    this.activeProject.inputConfigs.filter(item => item.matrix.map);
+  removeRelConfig(/* deptId */) {
+    this.activeProject.inputConfigs.filter((item) => item.matrix.map);
+  }
+
+  public toggleDocsModal() {
+    this.docsModal.toggleModal();
   }
 
   private departmentAddValidation(deptInstance: Department, project: Project) {
@@ -769,7 +776,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (deptInstance.dimension.height === 0) {
       throw new Error("height of department can not be zero (0)");
     }
-    for (let dept of project.departments) {
+    for (const dept of project.departments) {
       if (dept.color === deptInstance.color) {
         throw new Error("color value has been used. choose another.");
       }
@@ -783,7 +790,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!/\w+/.test(this.newProject.name)) {
       throw new Error("provide a project alias/name");
     }
-    for (let item of this.projects) {
+    for (const item of this.projects) {
       if (item.name === this.newProject.name) {
         throw new Error(
           "Project alias/name has been used please choose another"
@@ -796,7 +803,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!/\w+/.test(this.inputAlias)) {
       throw new Error("provide a Relationship alias/name");
     }
-    for (let item of this.indexedProjects[this.activeProject.id].inputConfigs) {
+    for (const item of this.indexedProjects[this.activeProject.id]
+      .inputConfigs) {
       if (item.name === this.inputAlias) {
         throw new Error(
           "Relationship alias/name has been used please choose another"
