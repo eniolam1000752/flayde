@@ -135,6 +135,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public showColorToggle = false;
   public renderMode = "plant";
   public btnActive = { nodal: "#828282", plant: null };
+  public nodalActive = true;
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
@@ -708,10 +709,12 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.renderMode = "nodal";
       this.btnActive.nodal = null;
       this.btnActive.plant = "#828282";
+      this.nodalActive = true;
     } else {
       this.renderMode = "plant";
       this.btnActive.nodal = "#828282";
       this.btnActive.plant = null;
+      this.nodalActive = false;
     }
   }
 
@@ -811,5 +814,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         );
       }
     }
+  }
+
+  public toogleLeftDrawer() {
+    this.layoutRef.toogleLeftDrawer();
   }
 }

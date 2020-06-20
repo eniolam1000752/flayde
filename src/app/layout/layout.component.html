@@ -1,13 +1,28 @@
 <div class="layout-wrapper theme-1">
-  <div class="layout-left">
+  <div
+    class="layout-left"
+    [ngClass]="{ 'layout-left': true, show: isShownLeft }"
+  >
     <div class="right-wrapper">
       <ng-content select="div[class='left']"></ng-content>
     </div>
   </div>
-  <div class=" layout-center">
+  <div class="layout-center">
     <div class="header">
-      <span class="dot"></span
-      >{{ activeProject.name || "- no project available -" }}
+      <div class="menu-wrapper">
+        <div class="status">
+          <div (click)="leftMenuClicked.emit($event)">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+      </div>
+      <span class="dot"></span>
+      {{ activeProject.name || "- no project available -" }}
+      <div class="status right-menu-wrapper">
+        <div (click)="rightMenuClicked.emit($event)">
+          <i class="fas fa-cog"></i>
+        </div>
+      </div>
       <div class="status">
         <div (click)="clickStatus($event)">
           <i *ngIf="!annotation" class="fas fa-sign-in-alt"></i>

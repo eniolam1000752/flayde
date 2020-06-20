@@ -11,6 +11,34 @@
   --indicator-color: #white;
   --tootip-background-color: black;
 }
+
+@media screen and (max-width: 1064px) {
+  .zoom-reset-color-picker-suit {
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+    margin-left: -10px !important;
+    height: unset !important;
+    .color-toggle.hide {
+      position: unset !important;
+      // margin-left: -40px !important;
+      height: 40px !important;
+      margin-top: 16px !important;
+      transform: translateX(17px);
+      top: 0px;
+    }
+    .color-toggle {
+      position: absolute !important;
+      height: 40px !important;
+      top: 70px;
+      left: 20px;
+      // margin-left: 30px !important;
+      // height: 40px !important;
+      // margin-left: -20px !important;
+    }
+  }
+}
+
 .theme-default {
   @include themeAbstraction();
   --background-color: #ededed;
@@ -25,6 +53,13 @@
   --background-color: #797979;
 }
 
+.zoom-reset-color-picker-suit {
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+  justify-content: flex-start;
+  height: 40px;
+}
 .pane-section {
   width: 100%;
   display: flex;

@@ -19,20 +19,14 @@
       #renderer
     >
       <div class="suit-section">
-        <div
-          style="
-            flex: 1;
-            flex-direction: row;
-            display: flex;
-            justify-content: flex-start;
-          "
-        >
+        <div class="zoom-reset-color-picker-suit">
           <app-button
             [color]="'white'"
             [type]="'round'"
             (clicked)="renderer.resetZoom()"
           >
             <i class="fas fa-redo-alt"></i>
+            <!--  -->
           </app-button>
           <div
             [ngClass]="{
@@ -49,6 +43,7 @@
               style="position: absolute; left: -20px;"
               t
             >
+              <!--  -->
               <i class="fas fa-edit"></i>
             </app-button>
             <div class="color-picker" style="padding-left: 16px;">
@@ -64,20 +59,24 @@
             </div>
           </div>
         </div>
-        <app-button
-          [type]="'rounded'"
-          [bgcolor]="btnActive.nodal"
-          (clicked)="toogleRenderMode('nodal')"
-        >
-          <span style="font-size: 13px;">Nodal Layout</span>
-        </app-button>
-        <app-button
-          [type]="'rounded'"
-          [bgcolor]="btnActive.plant"
-          (clicked)="toogleRenderMode('plant')"
-        >
-          <span style="font-size: 13px;">Plant Layout</span>
-        </app-button>
+        <div style="margin-top: -13px; margin-right: 20px;">
+          <app-button
+            [type]="'rounded'"
+            bgcolor="
+              {{ nodalActive ? 'var(--primary-color)' : '#8b8b8b' }}
+            "
+            (clicked)="toogleRenderMode('nodal')"
+          >
+            <span style="font-size: 13px;">Nodal Layout</span>
+          </app-button>
+          <app-button
+            [type]="'rounded'"
+            [bgcolor]="!nodalActive ? 'var(--primary-color)' : '#8b8b8b'"
+            (clicked)="toogleRenderMode('plant')"
+          >
+            <span style="font-size: 13px;">Plant Layout </span>
+          </app-button>
+        </div>
       </div>
     </app-rendrer>
   </ng-template>
@@ -105,7 +104,7 @@
         justify-content: space-around;
       "
     >
-      <app-button type="round">
+      <app-button type="round" (clicked)="toogleLeftDrawer()">
         <i #contentTest class="fas fa-bars"></i>
       </app-button>
       <app-button type="round"><i class="fas fa-print"></i> </app-button>
@@ -196,6 +195,13 @@
   </ng-template>
 
   <ng-template #rightContent>
+    <div class="v-space"></div>
+
+    <div style="width: 50px; margin-left: 10px;">
+      <app-button type="round" (clicked)="layoutRef.tooggleRightDrawer()">
+        <i class="fas fa-long-arrow-alt-right"></i>
+      </app-button>
+    </div>
     <div class="v-space"></div>
     <div class="v-space"></div>
 
@@ -822,6 +828,8 @@
     [activeProject]="activeProject"
     (statusClicked)="statusClicked()"
     [user]="currentUser.email ? currentUser.email[0].toUpperCase() : ''"
+    (leftMenuClicked)="toogleLeftDrawer()"
+    (rightMenuClicked)="layoutRef.tooggleRightDrawer()"
   >
     <div style="width: 100%; height: 100%;" class="center">
       <ng-container *ngTemplateOutlet="centerContent"></ng-container>

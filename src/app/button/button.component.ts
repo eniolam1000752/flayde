@@ -13,7 +13,7 @@ import {
   ViewChild,
   ContentChild,
   AfterViewChecked,
-  AfterContentInit
+  AfterContentInit,
 } from "@angular/core";
 import { TestServiceService } from "../test-service.service";
 
@@ -23,13 +23,13 @@ import { take, map } from "rxjs/operators";
 enum BtnTypes {
   "flat",
   "fab",
-  "disabled"
+  "disabled",
 }
 
 @Component({
   selector: "app-button",
   templateUrl: "./button.component.html",
-  styleUrls: ["./button.component.scss"]
+  styleUrls: ["./button.component.scss"],
 })
 export class ButtonComponent implements OnInit, OnChanges {
   @Input()
@@ -55,13 +55,13 @@ export class ButtonComponent implements OnInit, OnChanges {
     fab: false,
     rounded: false,
     btn: true,
-    fill: false
+    fill: false,
   };
   public customStyle = {};
 
   constructor(public globals: TestServiceService) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log()
+  ngOnChanges(): void {
+    this.customStyle = { "background-color": this.bgColor, color: this.color };
   }
 
   ngOnInit() {
@@ -71,13 +71,12 @@ export class ButtonComponent implements OnInit, OnChanges {
     this.btnClass.rounded = this.type === "rounded";
     this.btnClass.fill = this.type === "fill";
 
-    this.customStyle = {
-      ...this.customStyle,
-      ...{ "background-color": this.bgColor, color: this.color }
-    };
+    // this.customStyle = {
+    //   ...this.customStyle,
+    // };
   }
 
-  onClick = args => {
+  onClick = (args) => {
     this.clicked.emit(args);
   };
 }

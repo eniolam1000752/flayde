@@ -16,6 +16,35 @@
   }
 }
 
+@media screen and (max-width: 1064px) {
+  div.layout-wrapper {
+    div.layout-left {
+      position: absolute !important;
+      transform: translateX(-300px);
+      transition: all 1s cubic-bezier(0.8, -0.5, 0.2, 1.4);
+    }
+    div.layout-right {
+      position: absolute !important;
+      right: 0px;
+      transform: translateX(300px);
+    }
+    div.layout-right.show {
+      transform: translateX(0px);
+      transition: all 1s cubic-bezier(0.8, -0.5, 0.2, 1.4);
+    }
+    div.layout-left.show {
+      transform: translateX(0px);
+      transition: all 1s cubic-bezier(0.8, -0.5, 0.2, 1.4);
+    }
+    .menu-wrapper {
+      display: flex !important;
+    }
+    .right-menu-wrapper {
+      display: block !important;
+    }
+  }
+}
+
 div.layout-wrapper {
   position: fixed;
   width: 100%;
@@ -24,6 +53,18 @@ div.layout-wrapper {
   flex-direction: row;
   background-color: $white;
   justify-content: space-between;
+  .menu-wrapper {
+    width: 50px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    left: 6px;
+  }
+  .right-menu-wrapper {
+    transform: translateX(-40px);
+    display: none;
+  }
   div.layout-left {
     z-index: $layout-side-zindex;
     @include side-panel();
@@ -49,7 +90,7 @@ div.layout-wrapper {
     background-color: $white;
     .header {
       position: relative;
-      height: 41px;
+      height: 51px;
       width: 100%;
       background-color: var(--primary-color);
       box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.25);
