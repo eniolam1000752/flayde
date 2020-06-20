@@ -107,7 +107,7 @@
       <app-button type="round" (clicked)="toogleLeftDrawer()">
         <i #contentTest class="fas fa-bars"></i>
       </app-button>
-      <app-button type="round"><i class="fas fa-print"></i> </app-button>
+      <!-- <app-button type="round"><i class="fas fa-print"></i> </app-button> -->
       <app-button (clicked)="docsModal.toggleModal()" type="round">
         <i class="far fa-question-circle"></i>
       </app-button>
@@ -195,7 +195,7 @@
   </ng-template>
 
   <ng-template #rightContent>
-    <div class="v-space"></div>
+    <div class="v-space right-drawer-toogle-btn-siblin"></div>
 
     <div style="width: 50px; margin-left: 10px;">
       <app-button type="round" (clicked)="layoutRef.tooggleRightDrawer()">

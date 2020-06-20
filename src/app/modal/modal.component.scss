@@ -13,7 +13,8 @@
 
     .modal-content {
       position: relative;
-      width: 563px;
+      max-width: 563px;
+      min-width: 350px;
       padding: 20px;
       padding-top: 0px;
       background-color: $white;

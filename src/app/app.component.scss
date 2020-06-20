@@ -37,6 +37,12 @@
       // margin-left: -20px !important;
     }
   }
+  .right-drawer-toogle-btn-siblin {
+    display: block !important;
+  }
+  .right-drawer-toogle-btn-siblin ~ div {
+    display: block !important;
+  }
 }
 
 .theme-default {
@@ -51,6 +57,12 @@
 .theme-2 {
   @include themeAbstraction();
   --background-color: #797979;
+}
+.right-drawer-toogle-btn-siblin {
+  display: none;
+}
+.right-drawer-toogle-btn-siblin ~ div {
+  display: none;
 }
 
 .zoom-reset-color-picker-suit {
@@ -218,7 +230,7 @@
 }
 .color-picker {
   width: 100%;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   position: relative;
   left: 12px;
@@ -230,6 +242,7 @@
   background: var(--primary-color);
   margin-left: 7px;
   margin-right: 7px;
+  margin-bottom: 10px;
   border: 1px solid transparent;
   cursor: pointer;
 }
