@@ -819,4 +819,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   public toogleLeftDrawer() {
     this.layoutRef.toogleLeftDrawer();
   }
+
+  public printLayout() {
+    window.print();
+  }
 }

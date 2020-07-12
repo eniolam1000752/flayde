@@ -107,7 +107,9 @@
       <app-button type="round" (clicked)="toogleLeftDrawer()">
         <i #contentTest class="fas fa-bars"></i>
       </app-button>
-      <!-- <app-button type="round"><i class="fas fa-print"></i> </app-button> -->
+      <app-button (clicked)="printLayout()" type="round"
+        ><i class="fas fa-print"></i>
+      </app-button>
       <app-button (clicked)="docsModal.toggleModal()" type="round">
         <i class="far fa-question-circle"></i>
       </app-button>

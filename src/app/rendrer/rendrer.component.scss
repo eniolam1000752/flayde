@@ -14,6 +14,7 @@ div.renderer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    -webkit-print-color-adjust: exact;
     // transform: scale(1.7);
     img {
       opacity: 0.17;
@@ -43,6 +44,7 @@ div.renderer {
     margin-left: 1px;
     margin-right: 1px;
     position: relative;
+    -webkit-print-color-adjust: exact;
     // background-color: red;
     .tool-tip {
       position: absolute;
@@ -56,9 +58,11 @@ div.renderer {
     height: 50px;
     display: flex;
     position: relative;
+    -webkit-print-color-adjust: exact;
   }
   .block.clear {
     background-color: transparent;
+    -webkit-print-color-adjust: exact;
   }
   .block:hover {
     cursor: grab;
@@ -76,16 +80,19 @@ div.renderer {
       z-index: 40000;
       color: white;
       font-size: 13px;
+      -webkit-print-color-adjust: exact;
     }
   }
   .block.active:hover {
     box-shadow: 0px 0px 40px rgba($color: #000000, $alpha: 0.4);
     transition: all 0.2s;
+    -webkit-print-color-adjust: exact;
   }
 }
 .render-label {
   font-size: 16px;
   margin-top: 30px;
+  -webkit-print-color-adjust: exact;
 }
 .block.green-1 {
   background-color: green;

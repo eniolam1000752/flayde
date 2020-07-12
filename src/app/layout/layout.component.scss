@@ -44,6 +44,28 @@
     }
   }
 }
+@media print {
+  div.layout-wrapper {
+    div.layout-left {
+      display: none !important;
+    }
+    div.layout-right {
+      display: none !important;
+    }
+    div.layout-right.show {
+      display: none !important;
+    }
+    div.layout-left.show {
+      display: none !important;
+    }
+    .menu-wrapper {
+      display: none !important;
+    }
+    .right-menu-wrapper {
+      display: block !important;
+    }
+  }
+}
 
 div.layout-wrapper {
   position: fixed;
