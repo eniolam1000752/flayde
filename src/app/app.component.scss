@@ -44,6 +44,14 @@
     display: block !important;
   }
 }
+@media print {
+  .zoom-reset-color-picker-suit {
+    display: none !important;
+  }
+  .layout-toggle-wrapper {
+    display: none !important;
+  }
+}
 
 .theme-default {
   @include themeAbstraction();
