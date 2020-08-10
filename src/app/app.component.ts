@@ -13,6 +13,7 @@ import {
 import { ToastComponent } from "./toast/toast.component";
 import { Optimization } from "./optimization";
 import { RendrerComponent } from "./rendrer/rendrer.component";
+import { eventNames } from "process";
 
 interface ColorObj {
   color: string;
@@ -135,7 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public showColorToggle = false;
   public renderMode = "plant";
   public btnActive = { nodal: "#828282", plant: null };
-  public nodalActive = true;
+  public nodalActive = false;
 
   constructor(public globals: TestServiceService) {
     console.log("app construcror");
@@ -231,19 +232,34 @@ export class AppComponent implements OnInit, AfterViewInit {
     awaitFlag(false);
   }
 
-  generateLayoutMatrix = () => {
+  generateLayoutMatrix = (project: Project) => {
+    const tempProject = project || this.activeProject;
+    // console.log(tempProject, this.editSelectedRelationship);
+    if (!tempProject) {
+      return 0;
+    }
+    if (tempProject.inputConfigs.length === 0) {
+      this.toastMessage =
+        "There are no relationships setup for this project. Please provide relationships for created department to generate a layout";
+      this.toastRef.showToast();
+      return 0;
+    }
     if (!this.currentUser.email) {
       this.topToast.showToast();
       return 0;
     }
-    console.log(this.activeProject, this.editSelectedRelationship);
     this.isGenResult = false;
-    new Optimization(this.activeProject).run().subscribe((resp: Result) => {
+    new Optimization(tempProject).run().subscribe((resp: Result) => {
       console.log(resp);
       this.activeProject.result = resp;
       this.saveActions();
     });
   };
+
+  quickGenerateLayoutMatrix(event, project: Project) {
+    // event.stopPropagation();
+    this.generateLayoutMatrix(project);
+  }
 
   toggleRightPane() {
     this.layoutRef.colapseRightPane();
@@ -329,7 +345,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     if (this.activeProject.departments.length <= 2) {
       this.toastMessage =
-        "😠 Number of department should be greater than to provide a relationship";
+        "😠 Number of department should be greater than 2 to provide a relationship";
       this.toastRef.showToast();
       return 0;
     }
@@ -513,6 +529,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   selectProject(project: Project, id) {
+    if (this.activeProject.id !== id) {
+      this.activeProject.result.result = [[]];
+    }
+    console.log(this.activeProject.id, id);
     this.activeProject = this.indexedProjects[id];
   }
 

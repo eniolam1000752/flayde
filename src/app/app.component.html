@@ -8,10 +8,8 @@
   <ng-template #centerContent>
     <app-rendrer
       [data]="
-        activeProject.result
-          ? activeProject.result
-            ? activeProject.result.result
-            : [[]]
+        activeProject.result && activeProject.result.result
+          ? activeProject.result.result
           : [[]]
       "
       [isLoading]="isGenResult"
@@ -187,9 +185,16 @@
             ><br />
             <div>
               <div class="details">
-                {{ openedProject.description }}
+                {{
+                  "This is a " +
+                    openedProject.layoutType +
+                    " optimization project."
+                }}
               </div>
-              <div>
+              <div
+                style="border-radius: 50px;"
+                (click)="quickGenerateLayoutMatrix($event, openedProject)"
+              >
                 <img src="../assets/icons/play.svg" />
               </div>
             </div>
